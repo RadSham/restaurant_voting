@@ -7,13 +7,14 @@ DELETE FROM vote;
 
 
 INSERT INTO users (name, email, password)
-VALUES ('User', 'user@yandex.ru', '{noop}password'),
-       ('Admin', 'admin@gmail.com', '{noop}admin');
+VALUES ('User', 'user@yandex.ru', 'password'),
+       ('Admin', 'admin@gmail.com', 'admin'),
+       ('User2', 'user2@yandex.ru', 'password2');
 
 INSERT INTO user_roles (role, user_id)
 VALUES ('USER', 1),
        ('ADMIN', 2),
-       ('USER2', 2);
+       ('USER', 2);
 
 INSERT INTO restaurant (name)
 VALUES ('ALPHA'),

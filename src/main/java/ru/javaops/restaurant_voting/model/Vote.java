@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+// TODO:add table
 @Table(name = "vote")
 @Getter
 @Setter

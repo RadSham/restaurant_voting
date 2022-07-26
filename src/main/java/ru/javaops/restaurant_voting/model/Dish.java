@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
+// TODO:add table
 @Table(name = "dish")
 @Getter
 @Setter

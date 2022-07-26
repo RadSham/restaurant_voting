@@ -1,9 +1,10 @@
 DELETE FROM users;
 DELETE FROM user_roles;
+DELETE FROM restaurant;
 DELETE FROM dish;
 DELETE FROM menu;
-DELETE FROM restaurant;
 DELETE FROM vote;
+
 
 INSERT INTO users (name, email, password)
 VALUES ('User', 'user@yandex.ru', '{noop}password'),
@@ -12,9 +13,15 @@ VALUES ('User', 'user@yandex.ru', '{noop}password'),
 INSERT INTO user_roles (role, user_id)
 VALUES ('USER', 1),
        ('ADMIN', 2),
-       ('USER', 2);
+       ('USER2', 2);
 
-INSERT INTO dish (name, price, restauratn_id)
+INSERT INTO restaurant (name)
+VALUES ('ALPHA'),
+       ('BETA'),
+       ('GAMMA');
+
+
+INSERT INTO dish (name, price, RESTAURANT_ID)
 VALUES ('Grilled Chicken Sandwich', 2.5, 1),
        ('Spaghetti', 5, 2),
        ('French Fries', 4, 3),
@@ -34,10 +41,6 @@ VALUES ('AlphaMenu1', CURRENT_DATE, 1),
        ('GammaMenu1', CURRENT_DATE, 3),
        ('GammaMenu2', CURRENT_DATE, 3);
 
-INSERT INTO restaurant (name)
-VALUES ('ALPHA'),
-       ('BETA'),
-       ('GAMMA');
 
 INSERT INTO vote (date, user_id, restaurant_id)
 VALUES (CURRENT_DATE, 1, 1),

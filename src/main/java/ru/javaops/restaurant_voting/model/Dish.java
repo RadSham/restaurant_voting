@@ -5,8 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-// TODO:add table
-@Table(name = "dish")
+@Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"id", "restaurant_id"}, name = "dish_idx")})
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,6 +17,7 @@ public class Dish extends NamedEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
+    @ToString.Exclude
     private Restaurant restaurant;
 
 }

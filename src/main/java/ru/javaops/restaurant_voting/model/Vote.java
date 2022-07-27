@@ -9,8 +9,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-// TODO:add table
-@Table(name = "vote")
+@Table(name = "vote", uniqueConstraints = {@UniqueConstraint(columnNames = {"id", "restaurant_id"}, name = "vote_date_idx")})
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

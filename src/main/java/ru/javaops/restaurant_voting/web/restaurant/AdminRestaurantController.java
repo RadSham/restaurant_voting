@@ -25,8 +25,6 @@ import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.checkN
 @RestController
 @RequestMapping(value = AdminRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
-// TODO: cache only most requested data!
-@CacheConfig(cacheNames = "users")
 public class AdminRestaurantController extends AbstractRestaurantController {
     static final String REST_URL = "/api/admin/restaurants";
 
@@ -37,7 +35,6 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     }
 
     @GetMapping
-    @Cacheable
     public List<Restaurant> getAll() {
         log.info("getAll");
         return super.getAll();

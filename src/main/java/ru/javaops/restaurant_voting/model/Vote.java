@@ -1,11 +1,10 @@
 package ru.javaops.restaurant_voting.model;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -16,14 +15,22 @@ import java.util.Date;
 public class Vote extends BaseEntity {
 
     @Column(name = "date", nullable = false)
-    private Date date;
+    @NonNull
+    private LocalDate date;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
+
+    public Vote(@NonNull LocalDate date, User user, Restaurant restaurant) {
+        this.date = date;
+        this.user = user;
+        this.restaurant = restaurant;
+    }
 }

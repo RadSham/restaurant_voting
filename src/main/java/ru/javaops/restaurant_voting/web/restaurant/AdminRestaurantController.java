@@ -49,7 +49,7 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @CacheEvict(allEntries = true)
+    //@CacheEvict(allEntries = true)
     public ResponseEntity<Restaurant> createWithLocation(@Valid @RequestBody Restaurant restaurant) {
         log.info("create {}", restaurant);
         checkNew(restaurant);
@@ -58,6 +58,14 @@ public class AdminRestaurantController extends AbstractRestaurantController {
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
+    }
+
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
+        log.info("update {} with id={}", restaurant, id);
+        assureIdConsistent(restaurant, id);
+        repository.save(restaurant);
     }
 
 }

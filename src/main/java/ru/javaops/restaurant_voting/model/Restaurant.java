@@ -1,10 +1,7 @@
 package ru.javaops.restaurant_voting.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -18,12 +15,14 @@ import java.util.List;
 @Table(name = "restaurant")
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Restaurant extends NamedEntity {
 
     @OneToMany(mappedBy = "restaurant")
     @OrderBy("name DESC")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    //https://stackoverflow.com/a/50567626
     @JsonManagedReference
     private List<Dish> dishes;
 
@@ -36,7 +35,11 @@ public class Restaurant extends NamedEntity {
     @OneToMany(mappedBy = "restaurant")
     @OrderBy("date DESC")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    //https://stackoverflow.com/a/50567626
     @JsonManagedReference
     private List<Vote> votes;
 
+    public Restaurant(Integer id, String name) {
+        super(id, name);
+    }
 }

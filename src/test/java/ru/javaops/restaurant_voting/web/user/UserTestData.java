@@ -8,6 +8,8 @@ import ru.javaops.restaurant_voting.web.MatcherFactory;
 import java.util.Collections;
 import java.util.Date;
 
+import static ru.javaops.restaurant_voting.web.restaurant.AdminTestData.ADMIN_MAIL;
+
 public class UserTestData {
     public static final MatcherFactory.Matcher<User> USER_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(User.class, "registered", "password");
 
@@ -17,6 +19,7 @@ public class UserTestData {
     public static final String USER_MAIL = "user@yandex.ru";
     public static final String USER2_MAIL = "user2@yandex.ru";
     public static final String ADMIN_MAIL = "admin@gmail.com";
+
 
     public static final User user = new User(USER_ID, "User", USER_MAIL, "password", Role.USER);
     public static final User user2 = new User(3, "User2", "user2@yandex.ru", "password2", Role.USER);

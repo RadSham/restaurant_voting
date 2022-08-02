@@ -33,7 +33,6 @@ public class Menu extends NamedEntity {
 
     public Menu(String name, LocalDate date, Restaurant restaurant, Dish... dishes) {
         this(null, name, date, restaurant, Arrays.asList(dishes));
-
     }
 
     public Menu(Integer id, String name, LocalDate date, Restaurant restaurant, Collection<Dish> dishes) {

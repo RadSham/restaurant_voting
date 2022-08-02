@@ -7,6 +7,7 @@ import ru.javaops.restaurant_voting.util.JsonUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -79,5 +80,7 @@ public class MatcherFactory {
         private static String getContent(MvcResult result) throws UnsupportedEncodingException {
             return result.getResponse().getContentAsString();
         }
+
+
     }
 }

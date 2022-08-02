@@ -30,7 +30,7 @@ public class Restaurant extends NamedEntity {
     @OrderBy("date DESC")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonManagedReference
-    private List<Menu> menu;
+    private List<Menu> menus;
 
     @OneToMany(mappedBy = "restaurant")
     @OrderBy("date DESC")
@@ -42,4 +42,12 @@ public class Restaurant extends NamedEntity {
     public Restaurant(Integer id, String name) {
         super(id, name);
     }
+
+    public Restaurant(Integer id, String name, List<Dish> dishes, List<Menu> menus, List<Vote> votes){
+        super(id, name);
+        this.dishes = dishes;
+        this.menus = menus;
+        this.votes = votes;
+    }
+
 }

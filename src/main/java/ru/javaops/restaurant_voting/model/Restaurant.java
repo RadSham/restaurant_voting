@@ -22,21 +22,16 @@ public class Restaurant extends NamedEntity {
     @OneToMany(mappedBy = "restaurant")
     @OrderBy("name DESC")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    //https://stackoverflow.com/a/50567626
-    @JsonManagedReference
     private List<Dish> dishes;
 
     @OneToMany(mappedBy = "restaurant")
     @OrderBy("date DESC")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonManagedReference
     private List<Menu> menus;
 
     @OneToMany(mappedBy = "restaurant")
     @OrderBy("date DESC")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    //https://stackoverflow.com/a/50567626
-    @JsonManagedReference
     private List<Vote> votes;
 
     public Restaurant(Integer id, String name) {

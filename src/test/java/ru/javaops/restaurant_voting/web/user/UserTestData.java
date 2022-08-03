@@ -8,8 +8,6 @@ import ru.javaops.restaurant_voting.web.MatcherFactory;
 import java.util.Collections;
 import java.util.Date;
 
-import static ru.javaops.restaurant_voting.web.restaurant.AdminTestData.ADMIN_MAIL;
-
 public class UserTestData {
     public static final MatcherFactory.Matcher<User> USER_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(User.class, "registered", "password");
 
@@ -25,12 +23,12 @@ public class UserTestData {
     public static final User user2 = new User(3, "User2", "user2@yandex.ru", "password2", Role.USER);
     public static final User admin = new User(ADMIN_ID, "Admin", ADMIN_MAIL, "admin", Role.ADMIN, Role.USER);
 
-    public static User getNew() {
+    public static User getNewUser() {
         return new User(null, "New", "new@gmail.com", "newPass", false, new Date(), Collections.singleton(Role.USER));
     }
 
-    public static User getUpdated() {
-        return new User(USER_ID, "UpdatedName", USER_MAIL, "newPass", false, new Date(), Collections.singleton(Role.ADMIN));
+    public static User getUpdatedUser() {
+        return new User(USER_ID, "UpdatedUserName", USER_MAIL, "newPass", false, new Date(), Collections.singleton(Role.ADMIN));
     }
 
     public static String jsonWithPassword(User user, String passw) {

@@ -27,7 +27,6 @@ public class Vote extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
-
     public Vote(@NonNull LocalDate date, User user, Restaurant restaurant) {
         this.date = date;
         this.user = user;

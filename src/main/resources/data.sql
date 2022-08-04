@@ -44,10 +44,13 @@ VALUES ('AlphaMenu1', CURRENT_DATE, 1),
 
 
 INSERT INTO vote (date, user_id, restaurant_id)
-VALUES (CURRENT_DATE, 1, 1),
-       (CURRENT_DATE, 2, 1),
-       (DATEADD('DAY', 3, CURRENT_DATE), 1, 2),
-       (DATEADD('DAY', 2, CURRENT_DATE), 2, 2),
-       (CURRENT_DATE, 2, 3),
-       (DATEADD('DAY', 2, CURRENT_DATE), 1, 3);
+VALUES (DATEADD('DAY', -3, CURRENT_DATE), 1, 3),
+       (DATEADD('DAY', -3, CURRENT_DATE), 2, 2),
+       (DATEADD('DAY', -3, CURRENT_DATE), 3, 1),
+       (DATEADD('DAY', -2, CURRENT_DATE), 1, 2),
+       (DATEADD('DAY', -2, CURRENT_DATE), 2, 1),
+       (DATEADD('DAY', -2, CURRENT_DATE), 3, 3),
+       (DATEADD('DAY', -1, CURRENT_DATE), 1, 1),
+       (DATEADD('DAY', -1, CURRENT_DATE), 2, 3),
+       (DATEADD('DAY', -1, CURRENT_DATE), 3, 2);
 

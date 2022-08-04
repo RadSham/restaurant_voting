@@ -29,7 +29,6 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    //TODO: make get()
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void get() throws Exception{

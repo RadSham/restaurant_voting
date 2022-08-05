@@ -1,17 +1,21 @@
 package ru.javaops.restaurant_voting.web.vote;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import ru.javaops.restaurant_voting.model.User;
 import ru.javaops.restaurant_voting.model.Vote;
 import ru.javaops.restaurant_voting.repository.VoteRepository;
+import ru.javaops.restaurant_voting.web.AuthUser;
 
-import javax.validation.Valid;
-
-import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.assureIdConsistent;
+import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = VoteController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -28,11 +32,27 @@ public class VoteController {
         return ResponseEntity.of(repository.findById(id));
     }
 
-    //TODO: get votes by user
-    @GetMapping("/user/{id}")
-    public ResponseEntity<Vote> getByUserId(@Valid @RequestBody User user, @PathVariable int id) {
-        log.info("get votes {} with id={}", user, id);
-        assureIdConsistent(user, id);
-        return ResponseEntity.of(repository.getByUserId(id));
+    @GetMapping
+    public List<Vote> getAll() {
+        log.info("getAll");
+        return repository.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
+
+    //TODO: get votes by user
+    @GetMapping("/user")
+    @Operation(summary = "Get by user")
+    public ResponseEntity<Vote> getByUser(@AuthenticationPrincipal AuthUser authUser) {
+        log.info("get by user{}", authUser);
+        return ResponseEntity.of(repository.getByUser(authUser.id()));
+    }
+
+    @GetMapping("/useranddate")
+    @Operation(summary = "Get by user and date")
+    public ResponseEntity<Vote> getByUserAndDate(@AuthenticationPrincipal AuthUser authUser,
+                                                 @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        log.info("get by user{} {}", authUser, date);
+        return ResponseEntity.of(repository.getByUserAndDate(authUser.id(), date));
+    }
+
+
 }

@@ -27,6 +27,7 @@ import org.springframework.context.annotation.Configuration;
                         "<b>Credentials:</b><br>" +
                         "<b>Admin</b>: <span>admin@gmail.com:admin</span><br>" +
                         "<b>User</b>: <span>user@yandex.ru:password</span><br>" +
+                        "<b>User2</b>: <span>user2@yandex.ru:password2</span><br>" +
                         "</p>",
                 contact = @Contact(url = "https://github.com/RadSham", name = "Раджаб Шамсулвараев", email = "radsham9@gmail.com")
         ),

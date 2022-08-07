@@ -32,6 +32,7 @@ public class VoteController {
         return ResponseEntity.of(repository.findById(id));
     }
 
+
     @GetMapping
     public List<Vote> getAll() {
         log.info("getAll");
@@ -41,9 +42,9 @@ public class VoteController {
     //TODO: get votes by user
     @GetMapping("/user")
     @Operation(summary = "Get by user")
-    public ResponseEntity<Vote> getByUser(@AuthenticationPrincipal AuthUser authUser) {
+    public List<Vote> getByUser(@AuthenticationPrincipal AuthUser authUser) {
         log.info("get by user{}", authUser);
-        return ResponseEntity.of(repository.getByUser(authUser.id()));
+        return repository.getByUser(authUser.id());
     }
 
     @GetMapping("/useranddate")

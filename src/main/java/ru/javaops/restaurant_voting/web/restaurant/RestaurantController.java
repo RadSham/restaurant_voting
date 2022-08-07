@@ -15,7 +15,6 @@ import java.util.List;
 public class RestaurantController extends AbstractRestaurantController {
     static final String REST_URL = "/api/restaurants";
 
-
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<Restaurant> get(@PathVariable int id) {

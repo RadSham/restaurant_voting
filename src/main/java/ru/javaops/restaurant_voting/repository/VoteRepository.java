@@ -12,7 +12,6 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface VoteRepository extends BaseRepository<Vote>{
 
-    //TODO: get votes by user
     @Query("SELECT v FROM Vote v WHERE v.user.id = :userId ORDER BY v.id")
     List<Vote> getByUser(@Param("userId") int userId);
 

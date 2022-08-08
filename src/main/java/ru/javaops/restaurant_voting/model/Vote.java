@@ -18,7 +18,6 @@ public class Vote extends BaseEntity {
     @NonNull
     private LocalDate date;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
@@ -27,6 +26,7 @@ public class Vote extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
+
     public Vote(@NonNull LocalDate date, User user, Restaurant restaurant) {
         this.date = date;
         this.user = user;

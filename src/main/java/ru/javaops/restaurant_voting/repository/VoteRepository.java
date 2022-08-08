@@ -16,5 +16,5 @@ public interface VoteRepository extends BaseRepository<Vote>{
     List<Vote> getByUser(@Param("userId") int userId);
 
     @Query("SELECT v FROM Vote v WHERE v.user.id = :userId AND (:date IS NULL OR v.date = :date)")
-    Optional<Vote> getByUserAndDate(int userId, LocalDate date);
+    Vote getByUserAndDate(int userId, LocalDate date);
 }

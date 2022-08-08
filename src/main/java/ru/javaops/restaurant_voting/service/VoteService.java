@@ -17,10 +17,9 @@ public class VoteService {
     protected RestaurantRepository restaurantRepository;
 
     //TODO: to finish update method
-    public Vote update(User user, int restaurantId) {
-
-        //new Vote creating error
-        /*Vote vote = voteRepository.getByUserAndDate(user.id(), LocalDate.now());
-        return voteRepository.save(vote);*/
+    public Vote update(User user, int restaurantId){
+        Vote vote = voteRepository.getByUserAndDate(user.id(), LocalDate.now());
+        vote.setRestaurant(restaurantRepository.getById(restaurantId));
+        return voteRepository.save(vote);
     }
 }

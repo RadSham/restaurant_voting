@@ -6,6 +6,10 @@ import org.springframework.lang.NonNull;
 import ru.javaops.restaurant_voting.HasId;
 import ru.javaops.restaurant_voting.error.IllegalRequestDataException;
 
+import java.time.LocalTime;
+
+import static ru.javaops.restaurant_voting.util.DateTimeUtil.END_OF_VOTING_TIME;
+
 @UtilityClass
 public class ValidationUtil {
 
@@ -35,5 +39,11 @@ public class ValidationUtil {
     public static Throwable getRootCause(@NonNull Throwable t) {
         Throwable rootCause = NestedExceptionUtils.getRootCause(t);
         return rootCause != null ? rootCause : t;
+    }
+
+    public static void checkTime() {
+        if (LocalTime.now().isAfter(END_OF_VOTING_TIME))
+            throw new IllegalRequestDataException("Vote can be changed only before " + END_OF_VOTING_TIME);
+
     }
 }

@@ -3,7 +3,6 @@ package ru.javaops.restaurant_voting.web.vote;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -17,7 +16,10 @@ import ru.javaops.restaurant_voting.service.VoteService;
 import ru.javaops.restaurant_voting.web.AuthUser;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
+
+import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.checkTime;
 
 @RestController
 @RequestMapping(value = VoteController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -53,18 +55,17 @@ public class VoteController {
 
     @GetMapping("/useranddate")
     @Operation(summary = "Get by user and date")
-    public ResponseEntity<Vote> getByUserAndDate(@AuthenticationPrincipal AuthUser authUser,
+    public Vote getByUserAndDate(@AuthenticationPrincipal AuthUser authUser,
                                                  @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         log.info("get by user{} {}", authUser, date);
-        return ResponseEntity.of(repository.getByUserAndDate(authUser.id(), date));
+        return repository.getByUserAndDate(authUser.id(), date);
     }
 
-    //TODO: to finish update method
     @PutMapping
-    //@ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurantId) {
+    public Vote update(@AuthenticationPrincipal AuthUser authUser, int restaurantId) {
         log.info("update user {} vote for restaurant {}", authUser.id(), restaurantId);
-        voteService.update(authUser.getUser(), restaurantId);
+        checkTime();
+        return voteService.update(authUser.getUser(), restaurantId);
     }
 
 

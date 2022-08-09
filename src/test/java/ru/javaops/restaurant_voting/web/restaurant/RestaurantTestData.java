@@ -5,9 +5,9 @@ import ru.javaops.restaurant_voting.util.JsonUtil;
 import ru.javaops.restaurant_voting.web.MatcherFactory;
 
 import java.time.LocalDate;
-import java.util.*;
 
-public class AdminTestData {
+public class RestaurantTestData {
+
     public static final MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "menus", "votes", "dishes");
 
     public static final int RESTAURANT_ID_1 = 1;

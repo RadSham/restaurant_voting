@@ -8,7 +8,6 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.javaops.restaurant_voting.model.Restaurant;
-import ru.javaops.restaurant_voting.model.User;
 import ru.javaops.restaurant_voting.repository.RestaurantRepository;
 import ru.javaops.restaurant_voting.web.AbstractControllerTest;
 
@@ -16,9 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.javaops.restaurant_voting.web.restaurant.AdminTestData.*;
-import static ru.javaops.restaurant_voting.web.restaurant.AdminTestData.ADMIN_MAIL;
-import static ru.javaops.restaurant_voting.web.user.UserTestData.*;
+import static ru.javaops.restaurant_voting.web.restaurant.RestaurantTestData.*;
+import static ru.javaops.restaurant_voting.web.restaurant.RestaurantTestData.ADMIN_MAIL;
 
 @Slf4j
 class AdminRestaurantControllerTest extends AbstractControllerTest {

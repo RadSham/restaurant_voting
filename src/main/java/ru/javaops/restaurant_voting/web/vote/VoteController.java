@@ -47,14 +47,14 @@ public class VoteController {
     }
 
     @GetMapping("/user")
-    @Operation(summary = "Get by user")
+    @Operation(summary = "Get all votes by user")
     public List<Vote> getByUser(@AuthenticationPrincipal AuthUser authUser) {
         log.info("get by user{}", authUser);
         return repository.getByUser(authUser.id());
     }
 
     @GetMapping("/useranddate")
-    @Operation(summary = "Get by user and date")
+    @Operation(summary = "Get vote by user and date")
     public Vote getByUserAndDate(@AuthenticationPrincipal AuthUser authUser,
                                                  @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         log.info("get by user{} {}", authUser, date);
@@ -62,6 +62,7 @@ public class VoteController {
     }
 
     @PutMapping
+    @Operation(summary = "Update vote")
     public Vote update(@AuthenticationPrincipal AuthUser authUser, int restaurantId) {
         log.info("update user {} vote for restaurant {}", authUser.id(), restaurantId);
         checkTime();

@@ -56,7 +56,7 @@ public class VoteController {
     @GetMapping("/useranddate")
     @Operation(summary = "Get vote by user and date")
     public Vote getByUserAndDate(@AuthenticationPrincipal AuthUser authUser,
-                                                 @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+                                 @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         log.info("get by user{} {}", authUser, date);
         return repository.getByUserAndDate(authUser.id(), date);
     }

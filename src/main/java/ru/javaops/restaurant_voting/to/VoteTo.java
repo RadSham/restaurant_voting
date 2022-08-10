@@ -15,21 +15,15 @@ public class VoteTo extends BaseTo {
     LocalDate date;
 
     @NotBlank
-    User user;
+    Integer userId;
 
     @NotBlank
-    Restaurant restaurant;
+    Integer restaurantId;
 
-    public VoteTo(LocalDate date, User user, Restaurant restaurant) {
+    public VoteTo(int id, LocalDate date, int userId, int restaurantId) {
+        super(id);
         this.date = date;
-        this.user = user;
-        this.restaurant = restaurant;
-    }
-
-    public VoteTo(int id, LocalDate date, User user, Restaurant restaurant) {
-        this.id = id;
-        this.date = date;
-        this.user = user;
-        this.restaurant = restaurant;
+        this.userId = userId;
+        this.restaurantId = restaurantId;
     }
 }

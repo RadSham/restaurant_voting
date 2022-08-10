@@ -16,7 +16,6 @@ public class VoteService {
     protected VoteRepository voteRepository;
     protected RestaurantRepository restaurantRepository;
 
-    //TODO: to finish update method
     public Vote update(User user, int restaurantId){
         Vote vote = voteRepository.getByUserAndDate(user.id(), LocalDate.now());
         vote.setRestaurant(restaurantRepository.getById(restaurantId));

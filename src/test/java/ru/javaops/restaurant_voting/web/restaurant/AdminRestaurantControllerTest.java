@@ -23,7 +23,6 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
 
     private static final String REST_URL = AdminRestaurantController.REST_URL + '/';
 
-
     @Autowired
     private RestaurantRepository restaurantRepository;
 

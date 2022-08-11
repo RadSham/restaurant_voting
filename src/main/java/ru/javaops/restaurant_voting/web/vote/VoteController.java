@@ -3,12 +3,14 @@ package ru.javaops.restaurant_voting.web.vote;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ru.javaops.restaurant_voting.model.Vote;
 import ru.javaops.restaurant_voting.repository.VoteRepository;
@@ -27,7 +29,9 @@ import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.checkT
 @AllArgsConstructor
 public class VoteController {
 
+    @Autowired
     protected VoteRepository repository;
+
     protected VoteService voteService;
 
     static final String REST_URL = "/api/votes";
@@ -62,6 +66,7 @@ public class VoteController {
     }
 
     @PutMapping
+    @Transactional
     @Operation(summary = "Update vote")
     public Vote update(@AuthenticationPrincipal AuthUser authUser, int restaurantId) {
         log.info("update user {} vote for restaurant {}", authUser.id(), restaurantId);

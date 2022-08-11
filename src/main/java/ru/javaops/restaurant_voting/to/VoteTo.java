@@ -26,4 +26,10 @@ public class VoteTo extends BaseTo {
         this.userId = userId;
         this.restaurantId = restaurantId;
     }
+
+    public VoteTo(LocalDate date, int userId, int restaurantId) {
+        this.date = date;
+        this.userId = userId;
+        this.restaurantId = restaurantId;
+    }
 }

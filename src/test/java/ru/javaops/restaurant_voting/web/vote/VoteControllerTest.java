@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.javaops.restaurant_voting.model.User;
+import ru.javaops.restaurant_voting.model.Vote;
 import ru.javaops.restaurant_voting.repository.VoteRepository;
 import ru.javaops.restaurant_voting.to.UserTo;
 import ru.javaops.restaurant_voting.to.VoteTo;
@@ -18,10 +19,9 @@ import java.time.LocalDate;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.javaops.restaurant_voting.util.VoteUtil.createNewVoteFromTo;
-import static ru.javaops.restaurant_voting.web.user.UserTestData.USER_ID;
-import static ru.javaops.restaurant_voting.web.user.UserTestData.USER_MAIL;
-import static ru.javaops.restaurant_voting.web.user.UserTestData.user;
+import static ru.javaops.restaurant_voting.web.restaurant.RestaurantTestData.RESTAURANT_ID_2;
+import static ru.javaops.restaurant_voting.web.restaurant.RestaurantTestData.restaurantTest2;
+import static ru.javaops.restaurant_voting.web.user.UserTestData.*;
 import static ru.javaops.restaurant_voting.web.vote.VoteTestData.*;
 
 class VoteControllerTest extends AbstractControllerTest {
@@ -74,11 +74,14 @@ class VoteControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void update() throws Exception {
-        VoteTo updatedTo = new VoteTo(LocalDate.now(), ADMIN_ID, RESTAURANT_ID_3);
-        perform(MockMvcRequestBuilders.put(VoteController.REST_URL + "?restaurantId=" +RESTAURANT_ID_2).contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(createNewVoteFromTo(updatedTo))))
+        Vote updatedVote = getUpdatedVote(vote10Admin, RESTAURANT_ID_2);
+        perform(MockMvcRequestBuilders.put(VoteController.REST_URL + "?restaurantId=" + RESTAURANT_ID_2).contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(updatedVote)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        VOTE_MATCHER.assertMatch(voteRepository.getById(10), createNewVoteFromTo(updatedTo));
+        VOTE_MATCHER.assertMatch(voteRepository.getById(10), updatedVote);
     }
+
+
+
 }

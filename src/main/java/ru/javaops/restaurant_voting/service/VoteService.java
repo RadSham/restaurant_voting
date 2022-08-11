@@ -1,6 +1,7 @@
 package ru.javaops.restaurant_voting.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.javaops.restaurant_voting.model.User;
 import ru.javaops.restaurant_voting.model.Vote;
@@ -16,9 +17,12 @@ public class VoteService {
     protected VoteRepository voteRepository;
     protected RestaurantRepository restaurantRepository;
 
-    public Vote update(User user, int restaurantId){
-        Vote vote = voteRepository.getByUserAndDate(user.id(), LocalDate.now());
+    //TODO: without sout method works incorrect
+    public Vote update(Vote vote, int restaurantId) {
         vote.setRestaurant(restaurantRepository.getById(restaurantId));
+        System.out.println("vote.getRest " + vote.getRestaurant());
         return voteRepository.save(vote);
     }
+
+
 }

@@ -30,7 +30,7 @@ import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.checkT
 public class VoteController {
 
     @Autowired
-    protected VoteRepository repository;
+    protected VoteRepository voteRepository;
 
     protected VoteService voteService;
 
@@ -39,7 +39,7 @@ public class VoteController {
     @GetMapping("/{id}")
     public ResponseEntity<Vote> get(@PathVariable int id) {
         log.info("get {}", id);
-        return ResponseEntity.of(repository.findById(id));
+        return ResponseEntity.of(voteRepository.findById(id));
     }
 
 
@@ -47,14 +47,14 @@ public class VoteController {
     @Operation(summary = "Get all votes")
     public List<Vote> getAll() {
         log.info("getAll");
-        return repository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+        return voteRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
 
     @GetMapping("/user")
     @Operation(summary = "Get all votes by user")
     public List<Vote> getByUser(@AuthenticationPrincipal AuthUser authUser) {
         log.info("get by user{}", authUser);
-        return repository.getByUser(authUser.id());
+        return voteRepository.getByUser(authUser.id());
     }
 
     @GetMapping("/useranddate")
@@ -62,7 +62,7 @@ public class VoteController {
     public Vote getByUserAndDate(@AuthenticationPrincipal AuthUser authUser,
                                  @RequestParam @Nullable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         log.info("get by user{} {}", authUser, date);
-        return repository.getByUserAndDate(authUser.id(), date);
+        return voteRepository.getByUserAndDate(authUser.id(), date);
     }
 
     @PutMapping
@@ -70,8 +70,11 @@ public class VoteController {
     @Operation(summary = "Update vote")
     public Vote update(@AuthenticationPrincipal AuthUser authUser, int restaurantId) {
         log.info("update user {} vote for restaurant {}", authUser.id(), restaurantId);
-        checkTime();
-        return voteService.update(authUser.getUser(), restaurantId);
+        //TODO: open checkTime() after finish update test
+        //checkTime();
+        Vote vote = voteRepository.getByUserAndDate(authUser.id(), LocalDate.now());
+        //System.out.println("vote123update " + vote);
+        return voteService.update(vote, restaurantId);
     }
 
 

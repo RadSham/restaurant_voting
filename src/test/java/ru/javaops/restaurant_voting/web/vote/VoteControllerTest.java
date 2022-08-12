@@ -79,6 +79,7 @@ class VoteControllerTest extends AbstractControllerTest {
                 .content(JsonUtil.writeValue(updatedVote)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
+
         VOTE_MATCHER.assertMatch(voteRepository.getById(10), updatedVote);
     }
 

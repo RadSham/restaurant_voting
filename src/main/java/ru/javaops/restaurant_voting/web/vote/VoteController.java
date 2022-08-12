@@ -18,10 +18,8 @@ import ru.javaops.restaurant_voting.service.VoteService;
 import ru.javaops.restaurant_voting.web.AuthUser;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
-import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.checkTime;
 
 @RestController
 @RequestMapping(value = VoteController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -29,9 +27,7 @@ import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.checkT
 @AllArgsConstructor
 public class VoteController {
 
-    @Autowired
     protected VoteRepository voteRepository;
-
     protected VoteService voteService;
 
     static final String REST_URL = "/api/votes";
@@ -70,11 +66,9 @@ public class VoteController {
     @Operation(summary = "Update vote")
     public Vote update(@AuthenticationPrincipal AuthUser authUser, int restaurantId) {
         log.info("update user {} vote for restaurant {}", authUser.id(), restaurantId);
-        //TODO: open checkTime() after finish update test
+        //TODO: uncomment checkTime() after finish update test
         //checkTime();
-        Vote vote = voteRepository.getByUserAndDate(authUser.id(), LocalDate.now());
-        //System.out.println("vote123update " + vote);
-        return voteService.update(vote, restaurantId);
+        return voteService.update(authUser.id(), restaurantId);
     }
 
 

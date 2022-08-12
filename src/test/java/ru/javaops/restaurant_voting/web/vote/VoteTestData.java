@@ -12,7 +12,7 @@ import static ru.javaops.restaurant_voting.web.user.UserTestData.*;
 
 public class VoteTestData {
 
-    public static final MatcherFactory.Matcher<Vote> VOTE_MATCHER = MatcherFactory.usingEqualsComparator(Vote.class);
+    public static final MatcherFactory.Matcher<Vote> VOTE_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Vote.class, "id");
 
     public static Vote vote1User = new Vote(1, LocalDate.now().minusDays(3), user, restaurantTest3);
     public static Vote vote2Admin = new Vote(2, LocalDate.now().minusDays(3), admin, restaurantTest2);
@@ -33,7 +33,7 @@ public class VoteTestData {
 
     public static Vote getUpdatedVote(Vote vote, int restaurantId) {
         System.out.println("votees " + vote);
-        return new Vote(vote.getId(), vote.getDate(), vote.getUser(), restaurants.get(restaurantId));
+        return new Vote(vote.getDate(), vote.getUser(), restaurants.get(restaurantId));
     }
 
 }

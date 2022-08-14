@@ -5,23 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.javaops.restaurant_voting.model.User;
 import ru.javaops.restaurant_voting.model.Vote;
 import ru.javaops.restaurant_voting.repository.VoteRepository;
-import ru.javaops.restaurant_voting.to.UserTo;
-import ru.javaops.restaurant_voting.to.VoteTo;
-import ru.javaops.restaurant_voting.util.JsonUtil;
-import ru.javaops.restaurant_voting.util.UserUtil;
 import ru.javaops.restaurant_voting.web.AbstractControllerTest;
-
-import java.time.LocalDate;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.javaops.restaurant_voting.web.restaurant.RestaurantTestData.RESTAURANT_ID_2;
-import static ru.javaops.restaurant_voting.web.restaurant.RestaurantTestData.restaurantTest2;
+import static ru.javaops.restaurant_voting.web.restaurant.RestaurantTestData.*;
 import static ru.javaops.restaurant_voting.web.user.UserTestData.*;
+import static ru.javaops.restaurant_voting.web.user.UserTestData.ADMIN_MAIL;
 import static ru.javaops.restaurant_voting.web.vote.VoteTestData.*;
 
 class VoteControllerTest extends AbstractControllerTest {
@@ -34,7 +27,7 @@ class VoteControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = USER_MAIL)
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL+USER_ID))
+        perform(MockMvcRequestBuilders.get(REST_URL + USER_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -43,7 +36,7 @@ class VoteControllerTest extends AbstractControllerTest {
 
     @Test
     @WithUserDetails(value = USER_MAIL)
-    void getAll() throws Exception{
+    void getAll() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -71,18 +64,16 @@ class VoteControllerTest extends AbstractControllerTest {
                 .andExpect(VOTE_MATCHER.contentJson(vote1User));
     }
 
-    @Test
+    //TODO: finish test
+    /*@Test
     @WithUserDetails(value = ADMIN_MAIL)
     void update() throws Exception {
-        Vote updatedVote = getUpdatedVote(vote10Admin, RESTAURANT_ID_2);
-        perform(MockMvcRequestBuilders.put(VoteController.REST_URL + "?restaurantId=" + RESTAURANT_ID_2).contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(updatedVote)))
+        Vote updatedVote = getUpdatedVote(vote10Admin, RESTAURANT_ID_3);
+        perform(MockMvcRequestBuilders.put(VoteController.REST_URL + "?restaurantId=" + RESTAURANT_ID_2)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonVote(updatedVote)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-
         VOTE_MATCHER.assertMatch(voteRepository.getById(10), updatedVote);
-    }
-
-
-
+    }*/
 }

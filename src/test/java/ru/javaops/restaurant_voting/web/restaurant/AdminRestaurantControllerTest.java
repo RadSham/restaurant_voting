@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.javaops.restaurant_voting.web.restaurant.RestaurantTestData.*;
-import static ru.javaops.restaurant_voting.web.restaurant.RestaurantTestData.ADMIN_MAIL;
+import static ru.javaops.restaurant_voting.web.user.UserTestData.ADMIN_MAIL;
 
 @Slf4j
 class AdminRestaurantControllerTest extends AbstractControllerTest {

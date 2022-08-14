@@ -19,8 +19,6 @@ public class RestaurantTestData {
     public static final int NOT_FOUND = 1000;
     static LocalDate CURRENT_DATE = LocalDate.now();
 
-    public static final String ADMIN_MAIL = "admin@gmail.com";
-
     public static Restaurant restaurantTest1 = new Restaurant(RESTAURANT_ID_1, "ALPHA");
     public static Restaurant restaurantTest2 = new Restaurant(RESTAURANT_ID_2, "BETA");
     public static Restaurant restaurantTest3 = new Restaurant(RESTAURANT_ID_3, "GAMMA");

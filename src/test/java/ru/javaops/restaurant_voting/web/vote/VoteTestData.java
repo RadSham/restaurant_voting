@@ -1,7 +1,9 @@
 package ru.javaops.restaurant_voting.web.vote;
 
 
+import ru.javaops.restaurant_voting.model.Restaurant;
 import ru.javaops.restaurant_voting.model.Vote;
+import ru.javaops.restaurant_voting.util.JsonUtil;
 import ru.javaops.restaurant_voting.web.MatcherFactory;
 
 import java.time.LocalDate;
@@ -32,8 +34,11 @@ public class VoteTestData {
 
 
     public static Vote getUpdatedVote(Vote vote, int restaurantId) {
-        System.out.println("votees " + vote);
-        return new Vote(vote.getDate(), vote.getUser(), restaurants.get(restaurantId));
+        return new Vote(vote.getId(),vote.getDate(), vote.getUser(), restaurants.get(restaurantId));
+    }
+
+    public static String jsonVote(Vote vote) {
+        return JsonUtil.writeValue(vote);
     }
 
 }

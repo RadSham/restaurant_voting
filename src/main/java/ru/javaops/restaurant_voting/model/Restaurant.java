@@ -19,11 +19,11 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Restaurant extends NamedEntity {
 
-    @OneToMany(mappedBy = "restaurant")
+    /*@OneToMany(mappedBy = "restaurant")
     @OrderBy("name DESC")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Dish> dishes;
-
+*/
     @OneToMany(mappedBy = "restaurant")
     @OrderBy("date DESC")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -38,9 +38,8 @@ public class Restaurant extends NamedEntity {
         super(id, name);
     }
 
-    public Restaurant(Integer id, String name, List<Dish> dishes, List<Menu> menus, List<Vote> votes){
+    public Restaurant(Integer id, String name, List<Menu> menus, List<Vote> votes){
         super(id, name);
-        this.dishes = dishes;
         this.menus = menus;
         this.votes = votes;
     }

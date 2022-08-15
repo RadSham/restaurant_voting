@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -12,13 +13,19 @@ import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ru.javaops.restaurant_voting.model.User;
 import ru.javaops.restaurant_voting.model.Vote;
 import ru.javaops.restaurant_voting.repository.VoteRepository;
 import ru.javaops.restaurant_voting.service.VoteService;
 import ru.javaops.restaurant_voting.web.AuthUser;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
+
+import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.checkTime;
 
 
 @RestController
@@ -61,13 +68,23 @@ public class VoteController {
         return voteRepository.getByUserAndDate(authUser.id(), date);
     }
 
+    @PostMapping
+    @Operation(summary = "Create vote")
+    public ResponseEntity<Vote> createWithLocation(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurantId) {
+        Vote vote = new Vote(LocalDate.now(), authUser.getUser());
+        Vote newVote = voteService.save(vote, restaurantId);
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + "/{id}")
+                .buildAndExpand(newVote.getId()).toUri();
+        return ResponseEntity.created(uriOfNewResource).body(newVote);
+    }
+
     @PutMapping
-    @Transactional
     @Operation(summary = "Update vote")
-    public Vote update(@AuthenticationPrincipal AuthUser authUser, int restaurantId) {
+    public Vote update(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurantId) {
         log.info("update user {} vote for restaurant {}", authUser.id(), restaurantId);
         //TODO: uncomment checkTime() after finish update test
-        //checkTime();
+        checkTime();
         return voteService.update(authUser.id(), restaurantId);
     }
 

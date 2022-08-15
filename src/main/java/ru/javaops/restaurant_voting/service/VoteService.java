@@ -2,6 +2,7 @@ package ru.javaops.restaurant_voting.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.javaops.restaurant_voting.error.IllegalRequestDataException;
 import ru.javaops.restaurant_voting.model.Restaurant;
 import ru.javaops.restaurant_voting.model.Vote;
 import ru.javaops.restaurant_voting.repository.RestaurantRepository;
@@ -19,6 +20,14 @@ public class VoteService {
     public Vote update(int userId, int restaurantId) {
         Restaurant restaurant = restaurantRepository.getById(restaurantId);
         Vote vote = new Vote(voteRepository.getByUserAndDate(userId, LocalDate.now()));
+        vote.setRestaurant(restaurant);
+        return voteRepository.save(vote);
+    }
+
+    public Vote save(Vote vote, int restaurantId) {
+        if (voteRepository.getByUserAndDate(vote.getUser().getId(), vote.getDate()) != null)
+            throw new IllegalRequestDataException(vote.getClass().getSimpleName() + "Voting is possible once a day");
+        Restaurant restaurant = restaurantRepository.getById(restaurantId);
         vote.setRestaurant(restaurant);
         return voteRepository.save(vote);
     }

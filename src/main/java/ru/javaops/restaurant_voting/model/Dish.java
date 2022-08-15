@@ -6,7 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"id", "restaurant_id"}, name = "dish_idx")})
+@Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"id", "menu_id"}, name = "dish_idx")})
 @Getter
 @Setter
 @AllArgsConstructor
@@ -18,10 +18,10 @@ public class Dish extends NamedEntity {
     private double price;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "restaurant_id", nullable = false)
+    @JoinColumn(name = "menu_id", nullable = false)
     @JsonBackReference
     @ToString.Exclude
-    private Restaurant restaurant;
+    private Menu menu;
 
     public Dish(String name, double price) {
         this(null, name, price);

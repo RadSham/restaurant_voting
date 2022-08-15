@@ -21,8 +21,15 @@ VALUES ('ALPHA'),
        ('BETA'),
        ('GAMMA');
 
+INSERT INTO menu (name, date, restaurant_id)
+VALUES ('AlphaMenu1', CURRENT_DATE, 1),
+       ('AlphaMenu2', CURRENT_DATE, 1),
+       ('BetaMenu1', CURRENT_DATE, 2),
+       ('BetaMenu2', CURRENT_DATE, 2),
+       ('GammaMenu1', CURRENT_DATE, 3),
+       ('GammaMenu2', CURRENT_DATE, 3);
 
-INSERT INTO dish (name, price, RESTAURANT_ID)
+INSERT INTO dish (name, price, MENU_ID)
 VALUES ('Grilled Chicken Sandwich', 2.5, 1),
        ('Spaghetti', 5, 2),
        ('French Fries', 4, 3),
@@ -34,16 +41,7 @@ VALUES ('Grilled Chicken Sandwich', 2.5, 1),
        ('Pepperoni Pizza', 3.5, 3),
        ('Fish and Chips', 4, 1);
 
-INSERT INTO menu (name, date, restaurant_id)
-VALUES ('AlphaMenu1', CURRENT_DATE, 1),
-       ('AlphaMenu2', CURRENT_DATE, 1),
-       ('BetaMenu1', CURRENT_DATE, 2),
-       ('BetaMenu2', CURRENT_DATE, 2),
-       ('GammaMenu1', CURRENT_DATE, 3),
-       ('GammaMenu2', CURRENT_DATE, 3);
-
-
-INSERT INTO vote (date, user_id, restaurant_id)
+INSERT INTO vote (date, user_id, RESTAURANT_ID)
 VALUES (DATEADD('DAY', -3, CURRENT_DATE), 1, 3),
        (DATEADD('DAY', -3, CURRENT_DATE), 2, 2),
        (DATEADD('DAY', -3, CURRENT_DATE), 3, 1),

@@ -26,7 +26,7 @@ public class VoteService {
 
     public Vote save(Vote vote, int restaurantId) {
         if (voteRepository.getByUserAndDate(vote.getUser().getId(), vote.getDate()) != null)
-            throw new IllegalRequestDataException(vote.getClass().getSimpleName() + "Voting is possible once a day");
+            throw new IllegalRequestDataException("Voting is possible once a day");
         Restaurant restaurant = restaurantRepository.getById(restaurantId);
         vote.setRestaurant(restaurant);
         return voteRepository.save(vote);

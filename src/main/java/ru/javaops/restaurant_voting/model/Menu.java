@@ -1,16 +1,15 @@
 package ru.javaops.restaurant_voting.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "menu", uniqueConstraints = {@UniqueConstraint(columnNames = {"id", "restaurant_id"}, name = "menu_idx")})
@@ -18,6 +17,11 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Menu extends NamedEntity {
+
+    @OneToMany(mappedBy = "menu")
+    @OrderBy("name DESC")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Dish> dishes;
 
     @Column(name = "date", nullable = false)
     private LocalDate date;
@@ -39,5 +43,6 @@ public class Menu extends NamedEntity {
         super(id, name);
         this.date = date;
         this.restaurant = restaurant;
+        this.dishes = dishes.stream().toList();
     }
 }

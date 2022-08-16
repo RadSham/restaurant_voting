@@ -22,24 +22,24 @@ VALUES ('ALPHA'),
        ('GAMMA');
 
 INSERT INTO menu (name, date, restaurant_id)
-VALUES ('AlphaMenu1', CURRENT_DATE, 1),
-       ('AlphaMenu2', CURRENT_DATE, 1),
-       ('BetaMenu1', CURRENT_DATE, 2),
+VALUES ('AlphaMenu1', DATEADD('DAY', -1, CURRENT_DATE), 1),
+       ('AlphaMenu2',CURRENT_DATE, 1),
+       ('BetaMenu1', DATEADD('DAY', -1, CURRENT_DATE), 2),
        ('BetaMenu2', CURRENT_DATE, 2),
-       ('GammaMenu1', CURRENT_DATE, 3),
+       ('GammaMenu1', DATEADD('DAY', -1, CURRENT_DATE), 3),
        ('GammaMenu2', CURRENT_DATE, 3);
 
 INSERT INTO dish (name, price, MENU_ID)
-VALUES ('Grilled Chicken Sandwich', 2.5, 1),
-       ('Spaghetti', 5, 2),
-       ('French Fries', 4, 3),
-       ('Tossed Salad', 1.75, 1),
-       ('Apple Pie', 1.5, 2),
-       ('House Wine', 3, 3),
-       ('New York Steak', 6, 1),
-       ('Garlic Bread', 0.5, 2),
-       ('Pepperoni Pizza', 3.5, 3),
-       ('Fish and Chips', 4, 1);
+VALUES ('Albanian soup', 2.5, 1),
+       ('Brazilian soup', 5, 2),
+       ('Germans soup', 4, 3),
+       ('Albanian meat', 1.75, 1),
+       ('Brazilian meat', 1.5, 2),
+       ('Germans meat', 3, 3),
+       ('Albanian pizza', 6, 1),
+       ('Brazilian pizza', 0.5, 2),
+       ('Germans pizza', 3.5, 3),
+       ('Albanian fish', 4, 1);
 
 INSERT INTO vote (date, user_id, RESTAURANT_ID)
 VALUES (DATEADD('DAY', -3, CURRENT_DATE), 1, 3),

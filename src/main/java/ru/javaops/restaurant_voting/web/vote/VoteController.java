@@ -3,24 +3,19 @@ package ru.javaops.restaurant_voting.web.vote;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.javaops.restaurant_voting.model.User;
 import ru.javaops.restaurant_voting.model.Vote;
 import ru.javaops.restaurant_voting.repository.VoteRepository;
 import ru.javaops.restaurant_voting.service.VoteService;
 import ru.javaops.restaurant_voting.web.AuthUser;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
@@ -83,7 +78,6 @@ public class VoteController {
     @Operation(summary = "Update vote")
     public Vote update(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurantId) {
         log.info("update user {} vote for restaurant {}", authUser.id(), restaurantId);
-        //TODO: uncomment checkTime() after finish update test
         checkTime();
         return voteService.update(authUser.id(), restaurantId);
     }

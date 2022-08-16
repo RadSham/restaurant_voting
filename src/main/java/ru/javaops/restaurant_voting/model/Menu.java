@@ -31,8 +31,8 @@ public class Menu extends NamedEntity {
     @JsonBackReference
     private Restaurant restaurant;
 
-    public Menu(LocalDate date, Restaurant restaurant) {
-        this(null, null, date, restaurant, null);
+    public Menu(String name,LocalDate date, Restaurant restaurant) {
+        this(null, name, date, restaurant, null);
     }
 
     public Menu(String name, LocalDate date, Restaurant restaurant, Dish... dishes) {
@@ -43,6 +43,5 @@ public class Menu extends NamedEntity {
         super(id, name);
         this.date = date;
         this.restaurant = restaurant;
-        this.dishes = dishes.stream().toList();
     }
 }

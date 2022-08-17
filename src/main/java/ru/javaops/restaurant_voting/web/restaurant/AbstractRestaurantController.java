@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import ru.javaops.restaurant_voting.model.NamedEntity;
 import ru.javaops.restaurant_voting.model.Restaurant;
 import ru.javaops.restaurant_voting.repository.RestaurantRepository;
 import java.util.List;
@@ -18,7 +19,6 @@ public abstract class AbstractRestaurantController {
         log.info("get {}", id);
         return ResponseEntity.of(repository.findById(id));
     }
-
 
     public List<Restaurant> getAll() {
         log.info("getAll");

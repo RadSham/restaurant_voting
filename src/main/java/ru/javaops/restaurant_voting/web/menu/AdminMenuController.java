@@ -14,10 +14,13 @@ import ru.javaops.restaurant_voting.model.Menu;
 import ru.javaops.restaurant_voting.model.Vote;
 import ru.javaops.restaurant_voting.repository.MenuRepository;
 import ru.javaops.restaurant_voting.service.MenuService;
+import ru.javaops.restaurant_voting.to.MenuTo;
 
+import javax.validation.Valid;
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.List;
+
+import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.assureIdConsistent;
 
 @RestController
 @RequestMapping(value = AdminMenuController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -61,8 +64,8 @@ public class AdminMenuController {
 
     @PostMapping
     @Operation(summary = "Create menu")
-    public ResponseEntity<Menu> createWithLocation(@RequestParam String name,@RequestParam int restaurantId) {
-        Menu menu = menuService.save(name,LocalDate.now(), restaurantId);
+    public ResponseEntity<Menu> createWithLocation(@RequestParam MenuTo menuTo) {
+        Menu menu = menuService.saveFromTo(menuTo);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(menu.getId()).toUri();
@@ -70,12 +73,12 @@ public class AdminMenuController {
     }
 
     //TODO: finish update method
-    /*@PutMapping
+    @PutMapping(value = "/{id}")
     @Operation(summary = "Update menu")
-    public Menu update(@Valid @RequestBody MenuTo menuTo, @PathVariable int id) {
-        log.info("update menu {} with id {}", menuTo.getId(), id);
+    public Menu update(@Valid @RequestBody Menu menu, @PathVariable int id) {
+        log.info("update menu {} with id {}", menu.getId(), id);
         assureIdConsistent(menu, id);
         return menuRepository.save(menu);
-    }*/
+    }
 
 }

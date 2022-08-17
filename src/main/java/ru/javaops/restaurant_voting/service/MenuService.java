@@ -6,6 +6,7 @@ import ru.javaops.restaurant_voting.model.Menu;
 import ru.javaops.restaurant_voting.model.Restaurant;
 import ru.javaops.restaurant_voting.repository.MenuRepository;
 import ru.javaops.restaurant_voting.repository.RestaurantRepository;
+import ru.javaops.restaurant_voting.to.MenuTo;
 
 import java.time.LocalDate;
 
@@ -15,9 +16,9 @@ public class MenuService {
     MenuRepository menuRepository;
     RestaurantRepository restaurantRepository;
 
-    public Menu save(String name, LocalDate localDate, int restaurantId) {
-        Restaurant restaurant = restaurantRepository.getById(restaurantId);
-        Menu menu = new Menu(name, localDate, restaurant);
+    public Menu saveFromTo(MenuTo menuTo) {
+        Restaurant restaurant = restaurantRepository.getById(menuTo.getRestaurantId());
+        Menu menu = new Menu(menuTo.getName(), menuTo.getDate(), restaurant);
         return menuRepository.save(menu);
     }
 }

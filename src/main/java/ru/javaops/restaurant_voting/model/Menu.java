@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Menu extends NamedEntity {
 
-    @OneToMany(mappedBy = "menu")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "menu")
     @OrderBy("name DESC")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Dish> dishes;

@@ -1,9 +1,15 @@
-DELETE FROM dish;
-DELETE FROM menu;
-DELETE FROM vote;
-DELETE FROM user_roles;
-DELETE FROM users;
-DELETE FROM restaurant;
+DELETE
+FROM dish;
+DELETE
+FROM menu;
+DELETE
+FROM vote;
+DELETE
+FROM user_roles;
+DELETE
+FROM users;
+DELETE
+FROM restaurant;
 
 INSERT INTO users (name, email, password)
 VALUES ('User', 'user@yandex.ru', '{noop}password'),
@@ -23,23 +29,29 @@ VALUES ('ALPHA'),
 
 INSERT INTO menu (name, date, restaurant_id)
 VALUES ('AlphaMenu1', DATEADD('DAY', -1, CURRENT_DATE), 1),
-       ('AlphaMenu2',CURRENT_DATE, 1),
        ('BetaMenu1', DATEADD('DAY', -1, CURRENT_DATE), 2),
-       ('BetaMenu2', CURRENT_DATE, 2),
        ('GammaMenu1', DATEADD('DAY', -1, CURRENT_DATE), 3),
+       ('AlphaMenu2', CURRENT_DATE, 1),
+       ('BetaMenu2', CURRENT_DATE, 2),
        ('GammaMenu2', CURRENT_DATE, 3);
 
 INSERT INTO dish (name, price, MENU_ID)
 VALUES ('Albanian soup', 2.5, 1),
-       ('Brazilian soup', 5, 2),
-       ('Germans soup', 4, 3),
-       ('Albanian meat', 1.75, 1),
-       ('Brazilian meat', 1.5, 2),
-       ('Germans meat', 3, 3),
-       ('Albanian pizza', 6, 1),
-       ('Brazilian pizza', 0.5, 2),
-       ('Germans pizza', 3.5, 3),
-       ('Albanian fish', 4, 1);
+       ('Albanian tea', 0.5, 1),
+       ('Albanian meat', 5, 1),
+       ('Brazilian soup', 2, 2),
+       ('Brazilian tea', 1, 2),
+       ('Brazilian meat', 6, 2),
+       ('Germans soup', 3, 3),
+       ('Germans tea', 1.5, 3),
+       ('Germans meat', 7, 3),
+       ('Albanian coffee', 1.75, 4),
+       ('Albanian pizza', 4, 4),
+       ('Albanian fish', 8, 4),
+       ('Brazilian coffee', 1.5, 5),
+       ('Brazilian pizza', 5, 5),
+       ('Germans coffee', 2, 6),
+       ('Germans pizza', 3.5, 6);
 
 INSERT INTO vote (date, user_id, RESTAURANT_ID)
 VALUES (DATEADD('DAY', -3, CURRENT_DATE), 1, 3),

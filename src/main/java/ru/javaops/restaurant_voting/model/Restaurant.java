@@ -5,6 +5,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -25,10 +26,8 @@ public class Restaurant extends NamedEntity {
         this.menus = null;
     }
 
-    public Restaurant(Integer id, String name, List<Menu> menus) {
+    public Restaurant(Integer id, String name, Menu... menus) {
         super(id, name);
-        this.menus = menus;
+        this.menus = Arrays.asList(menus);
     }
-
-
 }

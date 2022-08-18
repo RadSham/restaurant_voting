@@ -15,10 +15,10 @@ public class VoteTo extends BaseTo {
     LocalDate date;
 
     @NotBlank
-    Integer userId;
+    int userId;
 
     @NotBlank
-    Integer restaurantId;
+    int restaurantId;
 
     public VoteTo(int id, LocalDate date, int userId, int restaurantId) {
         super(id);

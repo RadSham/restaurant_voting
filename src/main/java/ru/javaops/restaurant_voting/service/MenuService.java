@@ -8,8 +8,6 @@ import ru.javaops.restaurant_voting.repository.MenuRepository;
 import ru.javaops.restaurant_voting.repository.RestaurantRepository;
 import ru.javaops.restaurant_voting.to.MenuTo;
 
-import java.time.LocalDate;
-
 @Service
 @AllArgsConstructor
 public class MenuService {

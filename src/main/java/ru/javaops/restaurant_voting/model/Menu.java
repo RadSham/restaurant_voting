@@ -32,16 +32,21 @@ public class Menu extends NamedEntity {
     private Restaurant restaurant;
 
     public Menu(String name,LocalDate date, Restaurant restaurant) {
-        this(null, name, date, restaurant, null);
+        this(null, name, date, restaurant, (Dish) null);
     }
 
     public Menu(String name, LocalDate date, Restaurant restaurant, Dish... dishes) {
         this(null, name, date, restaurant, Arrays.asList(dishes));
     }
 
+    public Menu(Integer id, String name, LocalDate date, Restaurant restaurant, Dish... dishes) {
+        this(id, name, date, restaurant, Arrays.asList(dishes));
+    }
+
     public Menu(Integer id, String name, LocalDate date, Restaurant restaurant, Collection<Dish> dishes) {
         super(id, name);
         this.date = date;
         this.restaurant = restaurant;
+        this.dishes = (List<Dish>) dishes;
     }
 }

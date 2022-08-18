@@ -1,28 +1,29 @@
 package ru.javaops.restaurant_voting.to;
-import lombok.EqualsAndHashCode;
-import lombok.Value;
+import lombok.*;
+import lombok.experimental.NonFinal;
+import org.springframework.lang.Nullable;
 import ru.javaops.restaurant_voting.HasId;
-import javax.validation.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Value
 @EqualsAndHashCode(callSuper = true)
-public class MenuTo extends NamedTo implements HasId {
+@ToString(callSuper = true)
+public class MenuTo extends NamedTo {
 
+    @NonFinal
     LocalDate date;
 
-    @NotBlank
-    Integer restaurantId;
+    int dishId;
 
-    public MenuTo(Integer id, String name, Integer restaurantId) {
-        super(id, name);
-        this.date = LocalDate.now();
-        this.restaurantId = restaurantId;
-    }
+    @NotNull
+    int restaurantId;
 
-    public MenuTo(Integer id, String name, LocalDate date, Integer restaurantId) {
+    public MenuTo(Integer id, String name, LocalDate date, int dishId, int restaurantId) {
         super(id, name);
         this.date = date;
+        this.dishId = dishId;
         this.restaurantId = restaurantId;
     }
 }

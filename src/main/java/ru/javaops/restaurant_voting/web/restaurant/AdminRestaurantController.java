@@ -65,7 +65,7 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Update restaurant")
-    public void update(@Valid @RequestParam RestaurantTo restaurantTo, @PathVariable int id) {
+    public void update(@Valid @RequestBody RestaurantTo restaurantTo, @PathVariable int id) {
         log.info("update restaurant {}", id);
         Restaurant restaurant = RestaurantUtil.createNewFromTo(restaurantTo);
         assureIdConsistent(restaurant, id);

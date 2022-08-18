@@ -16,14 +16,12 @@ public class Vote extends BaseEntity {
     @NonNull
     private LocalDate date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)
-    @JsonBackReference
     private Restaurant restaurant;
 
     public Vote(@NonNull LocalDate date, User user, Restaurant restaurant) {

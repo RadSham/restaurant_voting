@@ -33,13 +33,6 @@ public class AdminMenuController {
 
     static final String REST_URL = "/api/admin/menus";
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Menu> get(@PathVariable int id) {
-        log.info("get {}", id);
-        return ResponseEntity.of(menuRepository.findById(id));
-    }
-
-
     @GetMapping
     @Operation(summary = "Get all menus")
     public List<Menu> getAll() {
@@ -47,11 +40,17 @@ public class AdminMenuController {
         return menuRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Menu> get(@PathVariable int id) {
+        log.info("get {}", id);
+        return ResponseEntity.of(menuRepository.findById(id));
+    }
+
     @GetMapping("/restaurant/{id}")
     @Operation(summary = "Get all votes by restaurant")
-    public List<Menu> getByRestaurant(@RequestParam int restaurantId) {
-        log.info("get by restaurant{}", restaurantId);
-        return menuRepository.getByRestaurant(restaurantId);
+    public List<Menu> getByRestaurant(@PathVariable int id) {
+        log.info("get by restaurant{}", id);
+        return menuRepository.getByRestaurant(id);
     }
 
 
@@ -65,7 +64,7 @@ public class AdminMenuController {
     //TODO: finish create method
     @PostMapping
     @Operation(summary = "Create menu")
-    public ResponseEntity<Menu> createWithLocation(@RequestParam MenuTo menuTo) {
+    public ResponseEntity<Menu> createWithLocation(@RequestBody MenuTo menuTo) {
         Menu menu = menuService.saveFromTo(menuTo);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")

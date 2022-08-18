@@ -1,5 +1,6 @@
 package ru.javaops.restaurant_voting.to;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.Value;
@@ -7,14 +8,16 @@ import lombok.Value;
 @Value
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class RestaurantTo extends NamedTo{
+public class DishTo extends NamedTo{
 
-    public RestaurantTo(int id, String name) {
-        super(id, name);
-    }
+    Double price;
 
-    public RestaurantTo(String name) {
+    Integer menuId;
+
+    public DishTo(String name, Double price, Integer menuId) {
         super(null, name);
+        this.price = price;
+        this.menuId = menuId;
     }
 
 }

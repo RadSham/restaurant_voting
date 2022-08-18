@@ -22,7 +22,7 @@ public abstract class AbstractRestaurantController {
 
     public List<Restaurant> getAll() {
         log.info("getAll");
-        return repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
+        return repository.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
 
 }

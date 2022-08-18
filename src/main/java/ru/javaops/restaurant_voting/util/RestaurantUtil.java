@@ -6,6 +6,7 @@ import ru.javaops.restaurant_voting.to.RestaurantTo;
 
 @UtilityClass
 public class RestaurantUtil {
+
     public static Restaurant createNewFromTo(RestaurantTo restaurantTo) {
         return new Restaurant(null, restaurantTo.getName());
     }

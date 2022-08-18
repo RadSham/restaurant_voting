@@ -24,13 +24,19 @@ public class Dish extends NamedEntity {
     private Menu menu;
 
     public Dish(String name, double price) {
-        this(null, name, price);
+        this(null, name, price, null);
     }
 
-    public Dish(Integer id, String name, double price) {
+    public Dish(String name, double price, Menu menu) {
+        super(null, name);
+        this.price = price;
+        this.menu = menu;
+    }
+
+    public Dish(Integer id, String name, double price, Menu menu) {
         super(id, name);
         this.price = price;
+        this.menu = menu;
     }
-
 
 }

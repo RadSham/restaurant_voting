@@ -1,5 +1,6 @@
 package ru.javaops.restaurant_voting.web.restaurant;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +18,13 @@ public class RestaurantController extends AbstractRestaurantController {
 
     @Override
     @GetMapping("/{id}")
+    @Operation(summary = "Get restaurant by id")
     public ResponseEntity<Restaurant> get(@PathVariable int id) {
         return super.get(id);
     }
 
     @GetMapping
+    @Operation(summary = "Get all restaurants")
     public List<Restaurant> getAll() {
         log.info("getAll");
         return super.getAll();

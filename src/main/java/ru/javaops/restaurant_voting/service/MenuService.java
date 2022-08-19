@@ -17,6 +17,6 @@ public class MenuService {
     public Menu saveFromTo(MenuTo menuTo) {
         Restaurant restaurant = restaurantRepository.getById(menuTo.getRestaurantId());
         Menu menu = new Menu(menuTo.getName(), menuTo.getDate(), restaurant);
-        return menuRepository.save(menu);
+        return menu;
     }
 }

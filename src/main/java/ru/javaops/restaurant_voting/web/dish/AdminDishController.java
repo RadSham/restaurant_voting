@@ -13,12 +13,14 @@ import ru.javaops.restaurant_voting.model.Dish;
 import ru.javaops.restaurant_voting.repository.DishRepository;
 import ru.javaops.restaurant_voting.service.DishService;
 import ru.javaops.restaurant_voting.to.DishTo;
+import ru.javaops.restaurant_voting.util.RestaurantUtil;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
 import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.assureIdConsistent;
+import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.checkNew;
 
 @RestController
 @RequestMapping(value = AdminDishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -45,14 +47,6 @@ public class AdminDishController {
         return ResponseEntity.of(dishRepository.findById(id));
     }
 
-    /*@GetMapping("/restaurant/{id}")
-    @Operation(summary = "Get all votes by restaurant")
-    public List<Dish> getByRestaurant(@PathVariable int id) {
-        log.info("get by restaurant{}", id);
-        return menuRepository.getByRestaurant(id);
-    }*/
-
-
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete dish")
@@ -61,24 +55,28 @@ public class AdminDishController {
         dishRepository.deleteExisted(id);
     }
 
-    //TODO: finish create method
     @PostMapping
     @Operation(summary = "Create dish")
     public ResponseEntity<Dish> createWithLocation(@RequestBody DishTo dishTo) {
-        Dish dish = dishService.saveFromTo(dishTo);
+        log.info("creat dish {}", dishTo.getName());
+        Dish dish = dishService.createNewFromTo(dishTo);
+        checkNew(dish);
+        dishRepository.save(dish);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(dish.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(dish);
     }
 
-    //TODO: finish update method
     @PutMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Update dish")
-    public Dish update(@Valid @RequestBody Dish dish, @PathVariable int id) {
-        log.info("update menu {} with id {}", dish.getId(), id);
+    public void update(@Valid @RequestBody DishTo dishTo, @PathVariable int id) {
+        log.info("update dish {} with id {}", dishTo.getId(), id);
+        Dish dish = dishService.createNewFromTo(dishTo);
+        checkNew(dish);
         assureIdConsistent(dish, id);
-        return dishRepository.save(dish);
+        dishRepository.save(dish);
     }
 
 }

@@ -35,6 +35,7 @@ public class VoteController {
     static final String REST_URL = "/api/votes";
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get vote by id")
     public ResponseEntity<Vote> get(@PathVariable int id) {
         log.info("get {}", id);
         return ResponseEntity.of(voteRepository.findById(id));
@@ -66,6 +67,7 @@ public class VoteController {
     @PostMapping
     @Operation(summary = "Create vote")
     public ResponseEntity<Vote> createWithLocation(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurantId) {
+        log.info("create user {} vote for restaurant {}", authUser.id(), restaurantId);
         Vote vote = new Vote(LocalDate.now(), authUser.getUser());
         Vote newVote = voteService.save(vote, restaurantId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -76,11 +78,13 @@ public class VoteController {
 
     @PutMapping
     @Operation(summary = "Update vote")
-    public Vote update(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurantId) {
+    public void update(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurantId) {
         log.info("update user {} vote for restaurant {}", authUser.id(), restaurantId);
         checkTime();
-        return voteService.update(authUser.id(), restaurantId);
+        voteService.update(authUser.id(), restaurantId);
     }
+
+    //TODO: delete method
 
 
 }

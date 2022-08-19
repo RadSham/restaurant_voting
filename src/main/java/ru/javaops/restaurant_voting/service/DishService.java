@@ -16,9 +16,16 @@ public class DishService {
     DishRepository dishRepository;
     MenuRepository menuRepository;
 
-    public Dish saveFromTo(DishTo dishTo) {
+    public Dish createNewFromTo(DishTo dishTo) {
         Menu menu = menuRepository.getById(dishTo.getMenuId());
-        Dish dish = new Dish(dishTo.getName(),dishTo.getPrice(), menu);
-        return dishRepository.save(dish);
+        Dish dish = new Dish(dishTo.getName(), dishTo.getPrice(), menu);
+        return dish;
     }
+
+    /*public Dish updateFromTo(DishTo dishTo, int id) {
+        Menu menu = menuRepository.getById(dishTo.getMenuId());
+        Dish dish = dishRepository.getById(id);
+        Dish updated = new Dish(dishTo.getName(), dishTo.getPrice(), menu);
+        return dishRepository.save(dish);
+    }*/
 }

@@ -7,10 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.javaops.restaurant_voting.model.Menu;
 import ru.javaops.restaurant_voting.model.Restaurant;
-import ru.javaops.restaurant_voting.service.MenuService;
-import ru.javaops.restaurant_voting.to.MenuTo;
 import ru.javaops.restaurant_voting.to.RestaurantTo;
 import ru.javaops.restaurant_voting.util.RestaurantUtil;
 
@@ -28,15 +25,15 @@ import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.checkN
 public class AdminRestaurantController extends AbstractRestaurantController {
     static final String REST_URL = "/api/admin/restaurants";
 
-    MenuService menuService;
-
     @Override
     @GetMapping("/{id}")
+    @Operation(summary = "Get restaurant by id")
     public ResponseEntity<Restaurant> get(@PathVariable int id) {
         return super.get(id);
     }
 
     @GetMapping
+    @Operation(summary = "Get all restaurants")
     public List<Restaurant> getAll() {
         log.info("getAll");
         return super.getAll();
@@ -52,23 +49,25 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
     @PostMapping
     @Operation(summary = "Create restaurant")
-    public ResponseEntity<Restaurant> createWithLocation(@Valid @RequestParam RestaurantTo name) {
-        log.info("create restaurant {}", name);
-        checkNew(name);
-        Restaurant created = repository.save(RestaurantUtil.createNewFromTo(name));
+    public ResponseEntity<Restaurant> createWithLocation(@Valid @RequestBody RestaurantTo restaurantTo) {
+        log.info("create restaurant {}", restaurantTo);
+        Restaurant created = RestaurantUtil.createNewFromTo(restaurantTo);
+        checkNew(created);
+        repository.save(created);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @PutMapping(value = "/{id}")
+    //TODO: finish update
+    /*@PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Update restaurant")
-    public void update(@Valid @RequestBody RestaurantTo restaurantTo, @PathVariable int id) {
+    public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
         log.info("update restaurant {}", id);
-        Restaurant restaurant = RestaurantUtil.createNewFromTo(restaurantTo);
+        checkNew(restaurant);
         assureIdConsistent(restaurant, id);
         repository.save(restaurant);
-    }
+    }*/
 }

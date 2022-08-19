@@ -1,5 +1,6 @@
 package ru.javaops.restaurant_voting.web.user;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -29,12 +30,14 @@ public class ProfileController extends AbstractUserController {
     static final String REST_URL = "/api/profile";
 
     @GetMapping
+    @Operation(summary = "Get user")
     public User get(@AuthenticationPrincipal AuthUser authUser) {
         return authUser.getUser();
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete user")
     public void delete(@AuthenticationPrincipal AuthUser authUser) {
         super.delete(authUser.id());
     }
@@ -42,6 +45,7 @@ public class ProfileController extends AbstractUserController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     @CacheEvict(allEntries = true)
+    @Operation(summary = "Register user")
     public ResponseEntity<User> register(@Valid @RequestBody UserTo userTo) {
         log.info("register {}", userTo);
         checkNew(userTo);
@@ -55,8 +59,10 @@ public class ProfileController extends AbstractUserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Transactional
     @CacheEvict(allEntries = true)
+    @Operation(summary = "Update user")
     public void update(@RequestBody @Valid UserTo userTo, @AuthenticationPrincipal AuthUser authUser) {
         assureIdConsistent(userTo, authUser.id());
+        checkNew(userTo);
         User user = authUser.getUser();
         prepareAndSave(UserUtil.updateFromTo(user, userTo));
     }

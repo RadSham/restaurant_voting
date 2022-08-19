@@ -21,6 +21,7 @@ import java.net.URI;
 import java.util.List;
 
 import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.assureIdConsistent;
+import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.checkNew;
 
 @RestController
 @RequestMapping(value = AdminMenuController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -41,6 +42,7 @@ public class AdminMenuController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get vote by id")
     public ResponseEntity<Menu> get(@PathVariable int id) {
         log.info("get {}", id);
         return ResponseEntity.of(menuRepository.findById(id));
@@ -56,6 +58,7 @@ public class AdminMenuController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete menu")
     public void delete(@PathVariable int id) {
         log.info("delete menu {}", id);
         menuRepository.deleteExisted(id);
@@ -65,7 +68,10 @@ public class AdminMenuController {
     @PostMapping
     @Operation(summary = "Create menu")
     public ResponseEntity<Menu> createWithLocation(@RequestBody MenuTo menuTo) {
+        log.info("creat menu {}", menuTo);
         Menu menu = menuService.saveFromTo(menuTo);
+        checkNew(menu);
+        menuRepository.save(menu);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(menu.getId()).toUri();
@@ -73,12 +79,13 @@ public class AdminMenuController {
     }
 
     //TODO: finish update method
-    @PutMapping(value = "/{id}")
+    /*@PutMapping(value = "/{id}")
     @Operation(summary = "Update menu")
-    public Menu update(@Valid @RequestBody Menu menu, @PathVariable int id) {
+    public void update(@Valid @RequestBody Menu menu, @PathVariable int id) {
+        checkNew(menu);
         log.info("update menu {} with id {}", menu.getId(), id);
         assureIdConsistent(menu, id);
-        return menuRepository.save(menu);
-    }
+        menuRepository.save(menu);
+    }*/
 
 }

@@ -8,6 +8,9 @@ import ru.javaops.restaurant_voting.repository.DishRepository;
 import ru.javaops.restaurant_voting.repository.MenuRepository;
 import ru.javaops.restaurant_voting.to.DishTo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 @AllArgsConstructor
@@ -22,10 +25,11 @@ public class DishService {
         return dish;
     }
 
-    /*public Dish updateFromTo(DishTo dishTo, int id) {
-        Menu menu = menuRepository.getById(dishTo.getMenuId());
-        Dish dish = dishRepository.getById(id);
-        Dish updated = new Dish(dishTo.getName(), dishTo.getPrice(), menu);
-        return dishRepository.save(dish);
-    }*/
+    public List<Dish> convertFromArrayToList(int[] array) {
+        List<Dish> dishes = new ArrayList<>();
+        for (int i : array) {
+            dishes.add(dishRepository.getById(i));
+        }
+        return dishes;
+    }
 }

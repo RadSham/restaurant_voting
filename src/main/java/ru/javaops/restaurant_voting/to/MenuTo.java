@@ -6,6 +6,7 @@ import ru.javaops.restaurant_voting.HasId;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.List;
 
 @Value
 @EqualsAndHashCode(callSuper = true)
@@ -15,15 +16,15 @@ public class MenuTo extends NamedTo {
     @NonFinal
     LocalDate date;
 
-    int dishId;
+    int[] dishes;
 
     @NotNull
     int restaurantId;
 
-    public MenuTo(Integer id, String name, LocalDate date, int dishId, int restaurantId) {
+    public MenuTo(Integer id, String name, LocalDate date, int[] dishes, int restaurantId) {
         super(id, name);
         this.date = date;
-        this.dishId = dishId;
+        this.dishes = dishes;
         this.restaurantId = restaurantId;
     }
 }

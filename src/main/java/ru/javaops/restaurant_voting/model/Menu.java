@@ -39,7 +39,7 @@ public class Menu extends NamedEntity {
     }
 
     public Menu(String name, LocalDate date, Restaurant restaurant, Dish... dishes) {
-        this(null, name, date, restaurant, Arrays.asList(dishes));
+        this(null, name, date, restaurant, dishes);
     }
 
     public Menu(Integer id, String name, LocalDate date, Restaurant restaurant, Dish... dishes) {
@@ -48,6 +48,13 @@ public class Menu extends NamedEntity {
 
     public Menu(Integer id, String name, LocalDate date, Restaurant restaurant, Collection<Dish> dishes) {
         super(id, name);
+        this.date = date;
+        this.restaurant = restaurant;
+        this.dishes = (List<Dish>) dishes;
+    }
+
+    public Menu(String name, LocalDate date, Restaurant restaurant, Collection<Dish> dishes) {
+        super(null, name);
         this.date = date;
         this.restaurant = restaurant;
         this.dishes = (List<Dish>) dishes;

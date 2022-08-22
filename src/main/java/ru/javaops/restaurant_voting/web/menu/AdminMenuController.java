@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ru.javaops.restaurant_voting.error.IllegalRequestDataException;
 import ru.javaops.restaurant_voting.model.Menu;
 import ru.javaops.restaurant_voting.model.Vote;
 import ru.javaops.restaurant_voting.repository.MenuRepository;
@@ -64,14 +65,16 @@ public class AdminMenuController {
         menuRepository.deleteExisted(id);
     }
 
-    //TODO: finish create method
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Create menu")
     public ResponseEntity<Menu> createWithLocation(@RequestBody MenuTo menuTo) {
-        log.info("creat menu {}", menuTo);
+        log.info("create menu {}", menuTo);
         Menu menu = menuService.saveFromTo(menuTo);
         checkNew(menu);
+        System.out.println("MMM " + menu.getId());
         menuRepository.save(menu);
+        menu.setId(menuTo.getRestaurantId());
+        System.out.println("MMM " + menu.getId());
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(menu.getId()).toUri();
@@ -79,13 +82,13 @@ public class AdminMenuController {
     }
 
     //TODO: finish update method
-    /*@PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Update menu")
     public void update(@Valid @RequestBody Menu menu, @PathVariable int id) {
         checkNew(menu);
         log.info("update menu {} with id {}", menu.getId(), id);
         assureIdConsistent(menu, id);
         menuRepository.save(menu);
-    }*/
+    }
 
 }

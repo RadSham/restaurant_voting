@@ -10,6 +10,10 @@ import java.util.List;
 
 @Transactional(readOnly = true)
 public interface MenuRepository extends BaseRepository<Menu>{
+
     @Query("SELECT m FROM Menu m WHERE m.restaurant.id = :restaurantId ORDER BY m.id")
     List<Menu> getByRestaurant(@Param("restaurantId") int restaurantId);
+
+    @Query("SELECT m.name FROM Menu m WHERE m.name = :name")
+    String getByName(@Param("name") String name);
 }

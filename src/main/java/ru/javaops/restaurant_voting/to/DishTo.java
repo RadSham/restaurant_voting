@@ -12,12 +12,12 @@ public class DishTo extends NamedTo{
 
     Double price;
 
-    Integer menuId;
+    Integer restaurantId;
 
-    public DishTo(String name, Double price, Integer menuId) {
+    public DishTo(String name, Double price, Integer restaurantId) {
         super(null, name);
         this.price = price;
-        this.menuId = menuId;
+        this.restaurantId = restaurantId;
     }
 
 }

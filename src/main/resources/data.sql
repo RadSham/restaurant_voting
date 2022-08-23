@@ -32,7 +32,7 @@ VALUES ('AlphaMenu', CURRENT_DATE, 1),
        ('BetaMenu', CURRENT_DATE, 2),
        ('GammaMenu', CURRENT_DATE, 3);
 
-INSERT INTO dish (name, price, MENU_ID)
+INSERT INTO dish (name, price, restaurant_id)
 VALUES ('Albanian soup', 2.5, 1),
        ('Albanian tea', 0.5, 1),
        ('Albanian meat', 5, 1),

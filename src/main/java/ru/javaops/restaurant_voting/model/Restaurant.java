@@ -1,11 +1,12 @@
 package ru.javaops.restaurant_voting.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "restaurant")
@@ -14,19 +15,19 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Restaurant extends NamedEntity {
 
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "restaurant")
-    @OrderBy("date DESC")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant")
+    @OrderBy("name DESC")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonManagedReference
-    private Menu menu;
+    private List<Dish> dishes;
 
     public Restaurant(Integer id, String name) {
         super(id, name);
-        this.menu = null;
+        this.dishes = null;
     }
 
-    public Restaurant(Integer id, String name, Menu menu) {
+    public Restaurant(Integer id, String name, Dish... dishes) {
         super(id, name);
-        this.menu = menu;
+        this.dishes = List.of(dishes);
     }
 }

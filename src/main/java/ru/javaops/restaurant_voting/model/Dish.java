@@ -1,12 +1,12 @@
 package ru.javaops.restaurant_voting.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"id", "menu_id"}, name = "dish_idx")})
+@Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"id", "restaurant_id"}, name = "dish_idx")})
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,26 +17,16 @@ public class Dish extends NamedEntity {
     @Column(name = "price", nullable = false)
     private double price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "menu_id", nullable = false)
-    @JsonBackReference
-    @ToString.Exclude
-    private Menu menu;
+    @ManyToOne(fetch = FetchType.EAGER)
+    // get only restaurantId: https://stackoverflow.com/questions/33475222/spring-boot-jpa-json-without-nested-object-with-onetomany-relation
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private Restaurant restaurant;
 
-    public Dish(String name, double price) {
-        this(null, name, price, null);
-    }
-
-    public Dish(String name, double price, Menu menu) {
+    public Dish(String name, double price, Restaurant restaurant) {
         super(null, name);
         this.price = price;
-        this.menu = menu;
+        this.restaurant = restaurant;
     }
-
-    public Dish(Integer id, String name, double price, Menu menu) {
-        super(id, name);
-        this.price = price;
-        this.menu = menu;
-    }
-
 }

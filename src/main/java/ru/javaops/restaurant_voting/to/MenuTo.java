@@ -18,7 +18,6 @@ public class MenuTo extends NamedTo {
 
     int[] dishes;
 
-    @NotNull
     int restaurantId;
 
     public MenuTo(Integer id, String name, LocalDate date, int[] dishes, int restaurantId) {

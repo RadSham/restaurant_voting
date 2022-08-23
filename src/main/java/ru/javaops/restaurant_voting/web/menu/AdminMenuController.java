@@ -21,14 +21,15 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
-import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.assureIdConsistent;
 import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.checkNew;
 
 @RestController
-@RequestMapping(value = AdminMenuController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+//@RequestMapping(value = AdminMenuController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 @AllArgsConstructor
 public class AdminMenuController {
+    //TODO:connect dish and menu
+    /*
 
     MenuRepository menuRepository;
     MenuService menuService;
@@ -70,11 +71,6 @@ public class AdminMenuController {
     public ResponseEntity<Menu> createWithLocation(@RequestBody MenuTo menuTo) {
         log.info("create menu {}", menuTo);
         Menu menu = menuService.saveFromTo(menuTo);
-        checkNew(menu);
-        System.out.println("MMM " + menu.getId());
-        menuRepository.save(menu);
-        menu.setId(menuTo.getRestaurantId());
-        System.out.println("MMM " + menu.getId());
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(menu.getId()).toUri();
@@ -84,11 +80,12 @@ public class AdminMenuController {
     //TODO: finish update method
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Update menu")
-    public void update(@Valid @RequestBody Menu menu, @PathVariable int id) {
+    public void update(@Valid @RequestBody MenuTo menuTo) {
+        log.info("update menu {}", menuTo.getName());
+        Menu menu = menuService.updateFromTo(menuTo);
         checkNew(menu);
-        log.info("update menu {} with id {}", menu.getId(), id);
-        assureIdConsistent(menu, id);
+        //assureIdConsistent(menu, id);
         menuRepository.save(menu);
     }
-
+*/
 }

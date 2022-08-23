@@ -20,11 +20,6 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Menu extends NamedEntity {
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "menu")
-    @OrderBy("name DESC")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonManagedReference
-    private List<Dish> dishes;
 
     @Column(name = "date", nullable = false)
     private LocalDate date;
@@ -50,13 +45,13 @@ public class Menu extends NamedEntity {
         super(id, name);
         this.date = date;
         this.restaurant = restaurant;
-        this.dishes = (List<Dish>) dishes;
+        //this.dishes = (List<Dish>) dishes;
     }
 
     public Menu(String name, LocalDate date, Restaurant restaurant, Collection<Dish> dishes) {
         super(null, name);
         this.date = date;
         this.restaurant = restaurant;
-        this.dishes = (List<Dish>) dishes;
+        //this.dishes = (List<Dish>) dishes;
     }
 }

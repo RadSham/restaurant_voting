@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.javaops.restaurant_voting.model.Dish;
 import ru.javaops.restaurant_voting.model.Menu;
+import ru.javaops.restaurant_voting.model.Restaurant;
 import ru.javaops.restaurant_voting.repository.DishRepository;
 import ru.javaops.restaurant_voting.repository.MenuRepository;
+import ru.javaops.restaurant_voting.repository.RestaurantRepository;
 import ru.javaops.restaurant_voting.to.DishTo;
 
 import java.util.ArrayList;
@@ -17,12 +19,11 @@ import java.util.List;
 public class DishService {
 
     DishRepository dishRepository;
-    MenuRepository menuRepository;
+    RestaurantRepository restaurantRepository;
 
     public Dish createNewFromTo(DishTo dishTo) {
-        Menu menu = menuRepository.getById(dishTo.getMenuId());
-        Dish dish = new Dish(dishTo.getName(), dishTo.getPrice(), menu);
-        return dish;
+        Restaurant restaurant = restaurantRepository.getById(dishTo.getRestaurantId());
+        return new Dish(dishTo.getName(), dishTo.getPrice(), restaurant);
     }
 
     public List<Dish> convertFromArrayToList(int[] array) {

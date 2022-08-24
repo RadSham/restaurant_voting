@@ -13,7 +13,6 @@ import ru.javaops.restaurant_voting.util.RestaurantUtil;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 
 import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.assureIdConsistent;
@@ -60,14 +59,14 @@ public class AdminRestaurantController extends AbstractRestaurantController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    //TODO: finish update
-    /*@PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Update restaurant")
-    public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
+    public void update(@Valid @RequestBody RestaurantTo restaurantTo, @PathVariable int id) {
         log.info("update restaurant {}", id);
-        checkNew(restaurant);
+        Restaurant restaurant = restaurantService.updateFromTo(restaurantTo, id);
+        //checkNew(restaurant);
         assureIdConsistent(restaurant, id);
         repository.save(restaurant);
-    }*/
+    }
 }

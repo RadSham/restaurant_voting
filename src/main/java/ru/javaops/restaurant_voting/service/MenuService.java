@@ -6,14 +6,10 @@ import ru.javaops.restaurant_voting.error.IllegalRequestDataException;
 import ru.javaops.restaurant_voting.model.Dish;
 import ru.javaops.restaurant_voting.model.Menu;
 import ru.javaops.restaurant_voting.model.Restaurant;
-import ru.javaops.restaurant_voting.model.Vote;
-import ru.javaops.restaurant_voting.repository.DishRepository;
 import ru.javaops.restaurant_voting.repository.MenuRepository;
 import ru.javaops.restaurant_voting.repository.RestaurantRepository;
 import ru.javaops.restaurant_voting.to.MenuTo;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.checkNew;
@@ -21,6 +17,7 @@ import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.checkN
 @Service
 @AllArgsConstructor
 public class MenuService {
+
     MenuRepository menuRepository;
     RestaurantRepository restaurantRepository;
     DishService dishService;

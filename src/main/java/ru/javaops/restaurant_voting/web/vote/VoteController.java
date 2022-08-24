@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
@@ -84,7 +85,12 @@ public class VoteController {
         voteService.update(authUser.id(), restaurantId);
     }
 
-    //TODO: delete method
-
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete dish")
+    public void delete(@PathVariable int id) {
+        log.info("delete menu {}", id);
+        voteRepository.deleteExisted(id);
+    }
 
 }

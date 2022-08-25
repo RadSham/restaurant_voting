@@ -7,29 +7,23 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.javaops.restaurant_voting.error.IllegalRequestDataException;
 import ru.javaops.restaurant_voting.model.Menu;
-import ru.javaops.restaurant_voting.model.Vote;
 import ru.javaops.restaurant_voting.repository.MenuRepository;
 import ru.javaops.restaurant_voting.service.MenuService;
 import ru.javaops.restaurant_voting.to.MenuTo;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
-import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.checkNew;
+import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.assureIdConsistent;
 
 @RestController
-//@RequestMapping(value = AdminMenuController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = AdminMenuController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 @AllArgsConstructor
 public class AdminMenuController {
-    //TODO:connect dish and menu
-    /*
 
     MenuRepository menuRepository;
     MenuService menuService;
@@ -44,14 +38,14 @@ public class AdminMenuController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get vote by id")
+    @Operation(summary = "Get menu by id")
     public ResponseEntity<Menu> get(@PathVariable int id) {
         log.info("get {}", id);
         return ResponseEntity.of(menuRepository.findById(id));
     }
 
     @GetMapping("/restaurant/{id}")
-    @Operation(summary = "Get all votes by restaurant")
+    @Operation(summary = "Get all menus by restaurant")
     public List<Menu> getByRestaurant(@PathVariable int id) {
         log.info("get by restaurant{}", id);
         return menuRepository.getByRestaurant(id);
@@ -77,15 +71,14 @@ public class AdminMenuController {
         return ResponseEntity.created(uriOfNewResource).body(menu);
     }
 
-    //TODO: finish update method
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Update menu")
-    public void update(@Valid @RequestBody MenuTo menuTo) {
-        log.info("update menu {}", menuTo.getName());
-        Menu menu = menuService.updateFromTo(menuTo);
-        checkNew(menu);
-        //assureIdConsistent(menu, id);
+    @Operation(summary = "Update menu name")
+    public void update(@RequestBody String name, @PathVariable int id) {
+        log.info("update menu {}", id);
+        Menu menu = menuService.updateFromTo(name, id);
+        //TODO: uncomment
+        //checkNew(menu);
+        assureIdConsistent(menu, id);
         menuRepository.save(menu);
     }
-*/
 }

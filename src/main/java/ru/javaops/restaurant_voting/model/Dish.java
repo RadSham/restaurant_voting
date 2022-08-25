@@ -24,9 +24,25 @@ public class Dish extends NamedEntity {
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    // get only restaurantId: https://stackoverflow.com/questions/33475222/spring-boot-jpa-json-without-nested-object-with-onetomany-relation
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JoinColumn(name = "menu_id")
+    private Menu menu;
+
     public Dish(String name, double price, Restaurant restaurant) {
         super(null, name);
         this.price = price;
         this.restaurant = restaurant;
+        this.menu=null;
+    }
+
+
+    public Dish(String name, double price, Restaurant restaurant, Menu menu) {
+        super(null, name);
+        this.price = price;
+        this.restaurant = restaurant;
+        this.menu = menu;
     }
 }

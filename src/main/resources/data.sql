@@ -32,16 +32,16 @@ VALUES ('AlphaMenu', CURRENT_DATE, 1),
        ('BetaMenu', CURRENT_DATE, 2),
        ('GammaMenu', CURRENT_DATE, 3);
 
-INSERT INTO dish (name, price, restaurant_id)
-VALUES ('Albanian soup', 2.5, 1),
-       ('Albanian tea', 0.5, 1),
-       ('Albanian meat', 5, 1),
-       ('Brazilian soup', 2, 2),
-       ('Brazilian tea', 1, 2),
-       ('Brazilian meat', 6, 2),
-       ('Germans soup', 3, 3),
-       ('Germans tea', 1.5, 3),
-       ('Germans meat', 7, 3);
+INSERT INTO dish (name, price, restaurant_id,MENU_ID)
+VALUES ('Albanian soup', 2.5, 1, 1),
+       ('Albanian tea', 0.5, 1, 1),
+       ('Albanian meat', 5, 1, null),
+       ('Brazilian soup', 2, 2, null),
+       ('Brazilian tea', 1, 2, 2),
+       ('Brazilian meat', 6, 2, 2),
+       ('Germans soup', 3, 3, 3),
+       ('Germans tea', 1.5, 3, null),
+       ('Germans meat', 7, 3, 3);
 
 INSERT INTO vote (date, user_id, RESTAURANT_ID)
 VALUES (DATEADD('DAY', -3, CURRENT_DATE), 1, 3),

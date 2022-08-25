@@ -13,7 +13,6 @@ import ru.javaops.restaurant_voting.model.Dish;
 import ru.javaops.restaurant_voting.repository.DishRepository;
 import ru.javaops.restaurant_voting.service.DishService;
 import ru.javaops.restaurant_voting.to.DishTo;
-import ru.javaops.restaurant_voting.util.RestaurantUtil;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -57,8 +56,8 @@ public class AdminDishController {
 
     @PostMapping
     @Operation(summary = "Create dish")
-    public ResponseEntity<Dish> createWithLocation(@RequestBody DishTo dishTo) {
-        log.info("creat dish {}", dishTo.getName());
+    public ResponseEntity<Dish> createWithLocation(@Valid @RequestBody DishTo dishTo) {
+        log.info("create dish {}", dishTo);
         Dish dish = dishService.createNewFromTo(dishTo);
         checkNew(dish);
         dishRepository.save(dish);
@@ -73,7 +72,7 @@ public class AdminDishController {
     @Operation(summary = "Update dish")
     public void update(@Valid @RequestBody DishTo dishTo, @PathVariable int id) {
         log.info("update dish {} with id {}", dishTo.getId(), id);
-        Dish dish = dishService.createNewFromTo(dishTo);
+        Dish dish = dishService.updateFromTo(dishTo);
         checkNew(dish);
         assureIdConsistent(dish, id);
         dishRepository.save(dish);

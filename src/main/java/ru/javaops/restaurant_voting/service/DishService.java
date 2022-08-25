@@ -1,6 +1,7 @@
 package ru.javaops.restaurant_voting.service;
 
 import lombok.AllArgsConstructor;
+import org.aspectj.bridge.Message;
 import org.springframework.stereotype.Service;
 import ru.javaops.restaurant_voting.error.IllegalRequestDataException;
 import ru.javaops.restaurant_voting.model.Dish;
@@ -13,6 +14,7 @@ import ru.javaops.restaurant_voting.to.DishTo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -33,6 +35,7 @@ public class DishService {
     public Dish updateFromTo(DishTo dishTo) {
         Restaurant updRestaurant = checkExistRestaurant(dishTo.getRestaurantId());
         Menu updMenu = checkExistMenu(dishTo.getMenuId());
+        compareMenuWithRestaurant(updMenu, updRestaurant);
         return new Dish(dishTo.getName(), dishTo.getPrice(), updRestaurant, updMenu);
     }
 
@@ -47,9 +50,22 @@ public class DishService {
     }
 
     public Menu checkExistMenu(int id) {
-        if(id == 0) return null;
+        if (id == 0) return null;
         Optional<Menu> menu = menuRepository.findById(id);
         return menu.orElseThrow(
                 () -> new IllegalRequestDataException("Menu with ID " + id + " doesn't exist"));
+    }
+
+    //TODO: to finish
+    public void compareMenuWithRestaurant(Menu menu, Restaurant restaurant) {
+        if (menu==null) return;
+        try {
+            if (!Objects.equals(menu.getId(), restaurant.getId())) {
+                throw new IllegalRequestDataException("Menu can't be different with restaurantID, that's why we set menu.id as" + restaurant.getId());
+            }
+        } catch (IllegalRequestDataException e) {
+            System.out.println(e.getMessage());
+            menu.setId(restaurant.getId());
+        }
     }
 }

@@ -62,7 +62,6 @@ public class ProfileController extends AbstractUserController {
     @Operation(summary = "Update user")
     public void update(@RequestBody @Valid UserTo userTo, @AuthenticationPrincipal AuthUser authUser) {
         assureIdConsistent(userTo, authUser.id());
-        checkNew(userTo);
         User user = authUser.getUser();
         prepareAndSave(UserUtil.updateFromTo(user, userTo));
     }

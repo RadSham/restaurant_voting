@@ -53,7 +53,6 @@ VALUES (DATEADD('DAY', -3, CURRENT_DATE), 1, 3),
        (DATEADD('DAY', -1, CURRENT_DATE), 1, 1),
        (DATEADD('DAY', -1, CURRENT_DATE), 2, 3),
        (DATEADD('DAY', -1, CURRENT_DATE), 3, 2),
-       (CURRENT_DATE, 2, 1),
        (CURRENT_DATE, 3, 1),
        (CURRENT_DATE, 1, 1);
 

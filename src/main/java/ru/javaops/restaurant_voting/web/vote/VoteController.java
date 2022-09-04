@@ -69,6 +69,7 @@ public class VoteController {
     @Operation(summary = "Create vote")
     public ResponseEntity<Vote> createWithLocation(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurantId) {
         log.info("create user {} vote for restaurant {}", authUser.id(), restaurantId);
+        checkTime();
         Vote vote = new Vote(LocalDate.now(), authUser.getUser());
         Vote newVote = voteService.save(vote, restaurantId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -87,7 +88,7 @@ public class VoteController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Delete dish")
+    @Operation(summary = "Delete vote")
     public void delete(@PathVariable int id) {
         log.info("delete menu {}", id);
         voteRepository.deleteExisted(id);

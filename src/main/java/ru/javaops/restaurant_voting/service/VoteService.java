@@ -14,8 +14,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class VoteService {
 
-    protected VoteRepository voteRepository;
-    protected RestaurantRepository restaurantRepository;
+    VoteRepository voteRepository;
+    RestaurantRepository restaurantRepository;
 
     public Vote update(int userId, int restaurantId) {
         Restaurant restaurant = restaurantRepository.getById(restaurantId);
@@ -29,6 +29,8 @@ public class VoteService {
             throw new IllegalRequestDataException("Voting is possible once a day");
         Restaurant restaurant = restaurantRepository.getById(restaurantId);
         vote.setRestaurant(restaurant);
-        return voteRepository.save(vote);
+        voteRepository.save(vote);
+        System.out.println("Vote for restaurant " + vote.getRestaurant());
+        return vote;
     }
 }

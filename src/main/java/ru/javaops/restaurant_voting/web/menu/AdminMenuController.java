@@ -76,8 +76,6 @@ public class AdminMenuController {
     public void update(@RequestBody String name, @PathVariable int id) {
         log.info("update menu {}", id);
         Menu menu = menuService.updateFromTo(name, id);
-        //TODO: uncomment
-        //checkNew(menu);
         assureIdConsistent(menu, id);
         menuRepository.save(menu);
     }

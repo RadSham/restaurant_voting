@@ -15,13 +15,6 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Restaurant extends NamedEntity {
 
- /*
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant")
-    @OrderBy("name DESC")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonManagedReference
-    private List<Dish> dishes;
-*/
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @OrderBy("name DESC")
     @OnDelete(action = OnDeleteAction.CASCADE)

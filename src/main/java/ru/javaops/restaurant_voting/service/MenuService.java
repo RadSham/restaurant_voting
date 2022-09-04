@@ -12,6 +12,8 @@ import ru.javaops.restaurant_voting.to.MenuTo;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.checkNew;
+
 @Service
 @AllArgsConstructor
 public class MenuService {
@@ -25,8 +27,6 @@ public class MenuService {
         Restaurant restaurant = checkExistRestaurant(menuTo.getRestaurantId());
         checkRestaurantMenu(restaurant);
         Menu menu = new Menu(menuTo.getRestaurantId(), menuTo.getName(), menuTo.getDate(), restaurant);
-        //TODO: uncomment
-        //checkNew(menu);
         return menuRepository.save(menu);
     }
 

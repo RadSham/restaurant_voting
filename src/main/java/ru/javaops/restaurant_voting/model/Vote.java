@@ -1,8 +1,6 @@
 package ru.javaops.restaurant_voting.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -31,10 +29,6 @@ public class Vote extends BaseEntity {
     @JsonIdentityReference(alwaysAsId = true)
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
-
-    public Vote(@NonNull LocalDate date, User user, Restaurant restaurant) {
-        this(null, date, user, restaurant);
-    }
 
     public Vote(@NonNull LocalDate date, User user) {
         this(null, date, user, null);

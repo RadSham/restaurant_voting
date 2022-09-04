@@ -26,6 +26,8 @@ public class VoteTestData {
     public static Vote vote8Admin = new Vote(8, LocalDate.now().minusDays(1), admin, restaurantTest3);
     public static Vote vote9User2 = new Vote(9, LocalDate.now().minusDays(1), user2, restaurantTest2);
     public static Vote vote10Admin = new Vote(10, LocalDate.now(), admin, restaurantTest1);
+    public static Vote vote11User2 = new Vote(11, LocalDate.now(), user2, restaurantTest1);
+    public static Vote vote12User = new Vote(12, LocalDate.now(), user, restaurantTest1);
 
 
     public static final Map<Integer, Vote> votes = Map.of(1, vote1User, 2, vote2Admin,

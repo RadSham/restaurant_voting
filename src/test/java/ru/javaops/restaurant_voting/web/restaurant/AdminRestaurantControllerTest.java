@@ -28,58 +28,10 @@ class AdminRestaurantControllerTest extends AbstractControllerTest {
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
-    void get() throws Exception{
-        perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID_1))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESTAURANT_MATCHER.contentJson(restaurantTest1));
-    }
-
-    @Test
-    @WithUserDetails(value = ADMIN_MAIL)
-    void getAll() throws Exception{
-            perform(MockMvcRequestBuilders.get(REST_URL))
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                    .andExpect(RESTAURANT_MATCHER.contentJson(restaurantTest1, restaurantTest2, restaurantTest3));
-    }
-
-    @Test
-    @WithUserDetails(value = ADMIN_MAIL)
-    void delete() throws Exception{
+    void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL + RESTAURANT_ID_1))
                 .andDo(print())
                 .andExpect(status().isNoContent());
         assertFalse(restaurantRepository.findById(RESTAURANT_ID_1).isPresent());
-    }
-
-    @Test
-    @WithUserDetails(value = ADMIN_MAIL)
-    void createWithLocation() throws Exception{
-        Restaurant newRest = getNewRestaurant();
-        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonRestaurant(newRest)))
-                .andExpect(status().isCreated());
-
-        Restaurant createdRest = RESTAURANT_MATCHER.readFromJson(action);
-        int newId = createdRest.id();
-        newRest.setId(newId);
-        RESTAURANT_MATCHER.assertMatch(createdRest, newRest);
-        RESTAURANT_MATCHER.assertMatch(restaurantRepository.getById(newId), newRest);
-    }
-
-    @Test
-    @WithUserDetails(value = ADMIN_MAIL)
-    void update() throws Exception{
-        Restaurant updated = getUpdatedRestaurant(RESTAURANT_ID_1);
-        updated.setId(null);
-        perform(MockMvcRequestBuilders.put(REST_URL + RESTAURANT_ID_1)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonRestaurant(updated)))
-                .andDo(print())
-                .andExpect(status().isNoContent());
-        RESTAURANT_MATCHER.assertMatch(restaurantRepository.getById(RESTAURANT_ID_1), getUpdatedRestaurant(RESTAURANT_ID_1));
     }
 }

@@ -3,6 +3,8 @@ package ru.javaops.restaurant_voting.web.menu;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +25,7 @@ import static ru.javaops.restaurant_voting.util.validation.ValidationUtil.assure
 @RequestMapping(value = AdminMenuController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 @AllArgsConstructor
+@CacheConfig(cacheNames = "menus")
 public class AdminMenuController {
 
     MenuRepository menuRepository;
@@ -34,7 +37,7 @@ public class AdminMenuController {
     @Operation(summary = "Get all menus")
     public List<Menu> getAll() {
         log.info("getAll");
-        return menuRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+        return menuRepository.findAll(Sort.by(Sort.Direction.ASC, "date"));
     }
 
     @GetMapping("/{id}")
@@ -55,12 +58,14 @@ public class AdminMenuController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete menu")
+    @CacheEvict(value = "menus", allEntries = true)
     public void delete(@PathVariable int id) {
         log.info("delete menu {}", id);
         menuRepository.deleteExisted(id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @CacheEvict(allEntries = true)
     @Operation(summary = "Create menu")
     public ResponseEntity<Menu> createWithLocation(@RequestBody MenuTo menuTo) {
         log.info("create menu {}", menuTo);
@@ -72,6 +77,7 @@ public class AdminMenuController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @CacheEvict(allEntries = true)
     @Operation(summary = "Update menu name")
     public void update(@RequestBody String name, @PathVariable int id) {
         log.info("update menu {}", id);

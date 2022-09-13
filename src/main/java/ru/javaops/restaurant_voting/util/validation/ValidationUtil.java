@@ -43,7 +43,7 @@ public class ValidationUtil {
 
     public static void checkTime() {
         if (LocalTime.now().isAfter(END_OF_VOTING_TIME))
-            throw new IllegalRequestDataException("Vote can be created or changed only before " + END_OF_VOTING_TIME);
+            throw new IllegalRequestDataException("Vote can be changed only before " + END_OF_VOTING_TIME);
     }
 
 

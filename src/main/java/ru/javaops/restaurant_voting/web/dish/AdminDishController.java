@@ -36,7 +36,7 @@ public class AdminDishController {
     @Operation(summary = "Get all dishes")
     public List<Dish> getAll() {
         log.info("getAll");
-        return dishRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+        return dishRepository.findAll(Sort.by(Sort.Direction.ASC, "restaurant"));
     }
 
     @GetMapping("/{id}")

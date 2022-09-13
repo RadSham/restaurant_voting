@@ -51,7 +51,7 @@ public class VoteController {
     }
 
     @GetMapping("/user")
-    @Operation(summary = "Get all votes by user")
+    @Operation(summary = "Get own votes [history]")
     public List<Vote> getByUser(@AuthenticationPrincipal AuthUser authUser) {
         log.info("get by user{}", authUser);
         return voteRepository.getByUser(authUser.id());
@@ -69,7 +69,6 @@ public class VoteController {
     @Operation(summary = "Create vote")
     public ResponseEntity<Vote> createWithLocation(@AuthenticationPrincipal AuthUser authUser, @RequestParam int restaurantId) {
         log.info("create user {} vote for restaurant {}", authUser.id(), restaurantId);
-        checkTime();
         Vote vote = new Vote(LocalDate.now(), authUser.getUser());
         Vote newVote = voteService.save(vote, restaurantId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
